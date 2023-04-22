@@ -16,7 +16,7 @@ function App() {
         <div className="app">
           <Sidebar />
           <main className="content">
-            {/* <Topbar /> */}
+            <Topbar />
             <Routes>
               <Route path="/" element={<Dashboard />}/>
             </Routes>
