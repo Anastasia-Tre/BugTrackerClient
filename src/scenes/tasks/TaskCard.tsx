@@ -20,7 +20,7 @@ const TaskCard = (props: { task: Task }) => {
           justifyContent: "space-between",
           padding: "15px",
           border: 1,
-          borderRadius: "15px",
+          borderRadius: "10px",
           margin: 1,
         }}
       >
