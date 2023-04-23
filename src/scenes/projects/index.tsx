@@ -26,7 +26,7 @@ const Projects = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="PROJECTS" subtitle="Welcome to your projects" />
       </Box>
-      <ProjectForm project={project1} />
+      {/* <ProjectForm project={project1} /> */}
       {/* PROJECTS LIST */}
       <Box display="flex" flexWrap="wrap" width="100%" gap={1}>
         {projectData.map((project, index) => (

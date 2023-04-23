@@ -2,8 +2,8 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import LinearProgress from "@mui/material/LinearProgress";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import Label from "../../components/Label";
 import { Project } from "../../types/Project";
+import GetLabel from "../../components/Label";
 
 const ProjectCard = (props: { project: Project }) => {
   const project = props.project;
@@ -28,8 +28,7 @@ const ProjectCard = (props: { project: Project }) => {
         <Box display="flex" flexDirection="column">
           {/* LABELS BOX */}
           <Box display="flex" mb="3px">
-            <Label text="OPEN" color={colors.greenAccent[400]} />
-            <Label text="CLOSED" color={colors.redAccent[400]} />
+            {GetLabel(project.status.toLowerCase())}
           </Box>
 
           <Typography
