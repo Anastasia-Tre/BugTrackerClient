@@ -7,7 +7,7 @@ import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Projects from "./scenes/projects";
-import Bugs from "./scenes/bugs";
+import Tasks from "./scenes/tasks";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -27,7 +27,7 @@ function App() {
                 <Route path="/projects" element={<Projects />} />
               </Routes>
               <Routes>
-                <Route path="/bugs" element={<Bugs />} />
+                <Route path="/tasks" element={<Tasks />} />
               </Routes>
             </main>
           </div>

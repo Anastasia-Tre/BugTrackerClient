@@ -13,7 +13,13 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import React from "react";
 
-const Item = (props: { title: string, to:string, icon: ReactNode, selected: string, setSelected: Function }) => {
+const Item = (props: {
+  title: string;
+  to: string;
+  icon: ReactNode;
+  selected: string;
+  setSelected: Function;
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -128,8 +134,8 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Bugs"
-              to="/bugs"
+              title="Tasks"
+              to="/tasks"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
