@@ -1,4 +1,12 @@
-import { Box, Button, TextField, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  MenuItem,
+  TextField,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Header from "../../components/Header";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -74,24 +82,27 @@ const ProjectForm = (props: { project: Project }) => {
                 helperText={touched.description && errors.description}
                 sx={{ gridColumn: "span 4" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="deadline"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.deadline}
-                name="deadline"
-                error={!!touched.deadline && !!errors.deadline}
-                helperText={touched.deadline && errors.deadline}
+              <DatePicker
+                label="Deadline"
+                value={Date.now}
+                onChange={(value) => {
+                  // convert the value to a string and set the form field value
+                  handleChange({
+                    target: {
+                      name: "deadline",
+                      value: value?.toString().substr(0, 10) || "",
+                    },
+                  });
+                }}
+                slotProps={{ textField: { variant: "filled" } }}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="status"
+                label="Status"
+                select
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.status}
@@ -99,7 +110,11 @@ const ProjectForm = (props: { project: Project }) => {
                 error={!!touched.status && !!errors.status}
                 helperText={touched.status && errors.status}
                 sx={{ gridColumn: "span 4" }}
-              />
+              >
+                <MenuItem value="OPEN">Open</MenuItem>
+                <MenuItem value="CLOSED">Closed</MenuItem>
+                <MenuItem value="CURRENT">Current</MenuItem>
+              </TextField>
             </Box>
             <Box display="flex" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
@@ -127,8 +142,10 @@ const ProjectForm = (props: { project: Project }) => {
 const checkoutSchema = yup.object().shape({
   name: yup.string().required("required"),
   description: yup.string().required("required"),
-  deadline: yup.string().required("required"),
-  status: yup.string().required("required"),
+  status: yup
+    .string()
+    .oneOf(["OPEN", "CLOSED", "CURRENT"])
+    .required("required"),
 });
 
 export default ProjectForm;

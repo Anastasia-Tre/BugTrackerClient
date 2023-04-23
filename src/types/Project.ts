@@ -1,17 +1,9 @@
-export interface IProject {
-    name: string, 
-    description: string,
-    deadline: string,
-    status: string,
-    bugs: number[],
-    team: number[]
-}
 
-export class Project implements IProject {
+export class Project {
     name!: string;
     description!: string;
     deadline!: string;
-    status!: string;
+    status!: 'OPEN' | 'CLOSED' | 'CURRENT';
     bugs!: number[];
     team!: number[];
 
@@ -23,5 +15,5 @@ export class Project implements IProject {
         return 25;
     }
 
-    
+
 }
