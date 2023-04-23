@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
-import React from "react";
 import Header from "../../components/Header";
+import { Project } from "../../types/Project";
 import ProjectCard from "./ProjectCard";
+import ProjectForm from "./ProjectForm";
 
 const Projects = () => {
   const projectData = [
@@ -14,20 +15,22 @@ const Projects = () => {
     { name: "Project 7", tasksDone: 40, tasksTotal: 50, time: "30d" },
   ];
 
+  var project1 = new Project();
+  project1.name = "Project";
+  project1.description = "Descriptin";
+  project1.status = "OPEN";
+
   return (
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title='PROJECTS' subtitle='Welcome to your projects' />
+        <Header title="PROJECTS" subtitle="Welcome to your projects" />
       </Box>
+      <ProjectForm project={project1} />
+      {/* PROJECTS LIST */}
       <Box display="flex" flexWrap="wrap" width="100%" gap={1}>
         {projectData.map((project, index) => (
-          <ProjectCard key={index}
-            name={project.name}
-            tasksDone={project.tasksDone}
-            tasksTotal={project.tasksTotal}
-            time={project.time}
-          />
+          <ProjectCard key={index} project={project1} />
         ))}
       </Box>
     </Box>
