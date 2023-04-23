@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -11,21 +11,22 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import React from "react";
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = (props: { title: string, to:string, icon: ReactNode, selected: string, setSelected: Function }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
     <MenuItem
-      active={selected === title}
+      active={props.selected === props.title}
       style={{
         color: colors.grey[100],
       }}
-      onClick={() => setSelected(title)}
-      icon={icon}
+      onClick={() => props.setSelected(props.title)}
+      icon={props.icon}
     >
-      <Typography>{title}</Typography>
-      <Link to={to} />
+      <Typography>{props.title}</Typography>
+      <Link to={props.to} />
     </MenuItem>
   );
 };
