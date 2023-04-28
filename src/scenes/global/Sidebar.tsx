@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { ColorModeContext, tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
@@ -131,14 +131,14 @@ const Sidebar = () => {
             <Item
               title="Projects"
               to="/projects"
-              icon={<PeopleOutlinedIcon />}
+              icon={<AssignmentOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Tasks"
               to="/tasks"
-              icon={<ContactsOutlinedIcon />}
+              icon={<TaskAltIcon />}
               selected={selected}
               setSelected={setSelected}
             />
