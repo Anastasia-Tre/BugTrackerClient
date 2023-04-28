@@ -260,10 +260,23 @@ const TaskForm = (props: { task: Task }) => {
 const checkoutSchema = yup.object().shape({
   name: yup.string().required("required"),
   description: yup.string().required("required"),
+  project: yup.string().required("required"),
+  deadline: yup.string().required("required"),
   status: yup
     .string()
     .oneOf(["NEW", "PROGRESS", "TESTING", "CLOSED"])
     .required("required"),
+  type: yup
+    .string()
+    .oneOf(["BUG", "TASK", "ISSUE", "FEATURE"])
+    .required("required"),
+  assignee: yup.string().required("required"),
+  author: yup.string().required("required"),
+  priority: yup
+    .string()
+    .oneOf(["MINOR", "LOW", "MEDIUM", "HIGH"])
+    .required("required"),
+  difficulty: yup.number().required("required"),
 });
 
 export default TaskForm;
