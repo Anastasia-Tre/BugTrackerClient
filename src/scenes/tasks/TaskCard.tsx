@@ -13,7 +13,7 @@ const TaskCard = (props: { task: Task }) => {
     <div>
       <Box
         sx={{
-          height: 200,
+          height: 220,
           width: 250,
           display: "flex",
           flexDirection: "column",
