@@ -1,12 +1,11 @@
 import { Typography, Box, useTheme } from "@mui/material";
-import React from "react";
 import { tokens } from "../theme";
 
 const Header = (props: { title: string; subtitle?: string }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <Box mb="30px">
+    <Box mb="20px">
       <Typography
         variant="h2"
         color={colors.grey[100]}

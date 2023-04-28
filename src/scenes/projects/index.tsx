@@ -1,4 +1,12 @@
-import { Box } from "@mui/material";
+import {
+  Box,
+  Button,
+  InputAdornment,
+  MenuItem,
+  TextField,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
 import Header from "../../components/Header";
 import { Project } from "../../types/Project";
 import ProjectCard from "./ProjectCard";
@@ -26,6 +34,64 @@ const Projects = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="PROJECTS" subtitle="Welcome to your projects" />
       </Box>
+      {/* FILTER BAR */}
+      <Box
+        width="100%"
+        display="grid"
+        gap="10px"
+        gridTemplateColumns="repeat(9, minmax(0, 1fr))"
+        paddingBottom="10px"
+      >
+        <TextField
+          fullWidth
+          size="small"
+          variant="filled"
+          type="text"
+          label="Search"
+          name="search"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ gridColumn: "span 2" }}
+        ></TextField>
+        <TextField
+          fullWidth
+          size="small"
+          variant="filled"
+          type="text"
+          label="Status"
+          select
+          name="status"
+          sx={{ gridColumn: "span 2" }}
+        >
+          <MenuItem value="OPEN">Open</MenuItem>
+          <MenuItem value="CLOSED">Closed</MenuItem>
+          <MenuItem value="CURRENT">Current</MenuItem>
+        </TextField>
+
+        <Button
+          onClick={(e) => console.log("filter")}
+          color="primary"
+          variant="contained"
+          sx={{ gridColumn: "span 1" }}
+        >
+          FILTER
+        </Button>
+        <Button
+          onClick={(e) => console.log("create")}
+          color="secondary"
+          variant="contained"
+          sx={{ gridColumn: "span 1" }}
+          endIcon={<AddIcon />}
+        >
+          CREATE
+        </Button>
+      </Box>
+
       {/* <ProjectForm project={project1} /> */}
       {/* PROJECTS LIST */}
       <Box display="flex" flexWrap="wrap" width="100%" gap={1}>

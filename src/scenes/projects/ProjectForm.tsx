@@ -86,7 +86,6 @@ const ProjectForm = (props: { project: Project }) => {
                 label="Deadline"
                 value={Date.now}
                 onChange={(value) => {
-                  // convert the value to a string and set the form field value
                   handleChange({
                     target: {
                       name: "deadline",
