@@ -8,6 +8,7 @@ import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Projects from "./scenes/projects";
 import Tasks from "./scenes/tasks";
+import User from "./scenes/user";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -28,6 +29,9 @@ function App() {
               </Routes>
               <Routes>
                 <Route path="/tasks" element={<Tasks />} />
+              </Routes>
+              <Routes>
+                <Route path="/user" element={<User />} />
               </Routes>
             </main>
           </div>
