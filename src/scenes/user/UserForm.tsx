@@ -21,7 +21,7 @@ const UserForm = (props: { user: User }) => {
   };
 
   return (
-    <Box m="20px">
+    <Box>
       <Header title="USER PROFILE" />
 
       <Formik

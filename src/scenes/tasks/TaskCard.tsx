@@ -20,8 +20,8 @@ const TaskCard = (props: { task: Task }) => {
           justifyContent: "space-between",
           padding: "15px",
           border: 1,
-          borderRadius: "10px",
-          margin: 1,
+          borderRadius: "8px",
+          margin: "8px 8px 0 0",
         }}
       >
         <Box display="flex" flexDirection="column">
