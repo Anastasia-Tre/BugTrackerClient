@@ -128,7 +128,9 @@ const Tasks = () => {
       {/* TASKS LIST */}
       <Box display="flex" flexWrap="wrap" width="100%" gap={1}>
         {testData.map((task, index) => (
-          <TaskCard key={index} task={task} />
+          <Box width="250px">
+            <TaskCard key={index} task={task} />
+          </Box>
         ))}
       </Box>
     </Box>
