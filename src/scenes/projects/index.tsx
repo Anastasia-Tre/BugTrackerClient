@@ -11,6 +11,8 @@ import Header from "../../components/Header";
 import { Project } from "../../types/Project";
 import ProjectCard from "./ProjectCard";
 import ProjectForm from "./ProjectForm";
+import { useEffect, useState } from "react";
+import { ProjectService } from "../../services/projectService";
 
 const Projects = () => {
   const projectData = [
@@ -27,6 +29,22 @@ const Projects = () => {
   project1.name = "Project";
   project1.description = "Descriptin";
   project1.status = "OPEN";
+
+  const [projects, setProjects] = useState<Project[]>([]);
+  const service = new ProjectService();
+  console.log("In project");
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await service.getAllProjects();
+        setProjects(data);
+      } catch (e) {
+        console.log("Error in load data for all projects" + e);
+      }
+    }
+    loadData();
+  }, []);
 
   return (
     <Box m="20px">
@@ -95,8 +113,8 @@ const Projects = () => {
       {/* <ProjectForm project={project1} /> */}
       {/* PROJECTS LIST */}
       <Box display="flex" flexWrap="wrap" width="100%" gap={1}>
-        {projectData.map((project, index) => (
-          <ProjectCard key={index} project={project1} />
+        {projects.map((project, index) => (
+          <ProjectCard key={index} project={project} />
         ))}
       </Box>
     </Box>
