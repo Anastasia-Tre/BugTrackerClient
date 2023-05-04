@@ -31,4 +31,46 @@ export class ProjectService {
       }
     }
   }
+
+  async filterProjects(name?: string, status?: string): Promise<Project[]> {
+    try {
+      const { data, status: responseStatus } = await axios.get<Project[]>(
+        GET_ALL_PROJECTS(),
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      let filteredProjects = this.convertToProjectModels(data);
+
+      if (name) {
+        filteredProjects = filteredProjects.filter((project) =>
+          project.name.toLowerCase().includes(name.toLowerCase())
+        );
+      }
+
+      if (status) {
+        filteredProjects = filteredProjects.filter(
+          (project) => project.status === status
+        );
+      }
+
+      console.log(
+        `Filtered projects by name=${name} and status=${status}:`,
+        filteredProjects
+      );
+
+      return filteredProjects;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        throw new Error("Failed to get projects");
+      } else {
+        console.log("unexpected error: ", error);
+        throw error;
+      }
+    }
+  }
 }

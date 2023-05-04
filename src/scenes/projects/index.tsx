@@ -15,24 +15,10 @@ import { useEffect, useState } from "react";
 import { ProjectService } from "../../services/projectService";
 
 const Projects = () => {
-  const projectData = [
-    { name: "Project 1", tasksDone: 25, tasksTotal: 50, time: "12d" },
-    { name: "Project 2", tasksDone: 30, tasksTotal: 50, time: "20d" },
-    { name: "Project 3", tasksDone: 10, tasksTotal: 70, time: "30d" },
-    { name: "Project 4", tasksDone: 30, tasksTotal: 70, time: "3d" },
-    { name: "Project 5", tasksDone: 20, tasksTotal: 50, time: "10d" },
-    { name: "Project 6", tasksDone: 0, tasksTotal: 10, time: "6d" },
-    { name: "Project 7", tasksDone: 40, tasksTotal: 50, time: "30d" },
-  ];
-
-  var project1 = new Project();
-  project1.name = "Project";
-  project1.description = "Descriptin";
-  project1.status = "OPEN";
-
   const [projects, setProjects] = useState<Project[]>([]);
+  const [name, setName] = useState<string>();
+  const [status, setStatus] = useState<string>();
   const service = new ProjectService();
-  console.log("In project");
 
   useEffect(() => {
     async function loadData() {
@@ -45,6 +31,16 @@ const Projects = () => {
     }
     loadData();
   }, []);
+
+  const filter = async (name?: string, status?: string) => {
+    if (status == "ALL") status = undefined;
+    try {
+      const data = await service.filterProjects(name, status);
+      setProjects(data);
+    } catch (e) {
+      console.log("Error in filter data for all projects" + e);
+    }
+  };
 
   return (
     <Box m="20px">
@@ -67,6 +63,7 @@ const Projects = () => {
           type="text"
           label="Search"
           name="search"
+          onChange={(val) => setName(val.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -82,6 +79,7 @@ const Projects = () => {
           variant="filled"
           type="text"
           label="Status"
+          onChange={(val) => setStatus(val.target.value)}
           select
           name="status"
           sx={{ gridColumn: "span 2" }}
@@ -89,10 +87,14 @@ const Projects = () => {
           <MenuItem value="OPEN">Open</MenuItem>
           <MenuItem value="CLOSED">Closed</MenuItem>
           <MenuItem value="CURRENT">Current</MenuItem>
+          <MenuItem value="ALL">All</MenuItem>
         </TextField>
 
         <Button
-          onClick={(e) => console.log("filter")}
+          onClick={(e) => {
+            console.log("filter");
+            filter(name, status);
+          }}
           color="primary"
           variant="contained"
           sx={{ gridColumn: "span 1" }}
