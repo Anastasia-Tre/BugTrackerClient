@@ -1,14 +1,27 @@
 export class User {
-  firstName!: string;
-  lastName!: string;
-  email!: string;
-  phone!: string;
-  title!: string;
-  bio!: string;
-  password!: string;
+  public id: number | undefined;
+  public firstName: string = "";
+  public lastName: string = "";
+  public email: string = "";
+  public phone: string = "";
+  public title: string = "";
+  public bio: string = "";
+  public password: string = "";
+
+  constructor(initializer?: any) {
+    if (!initializer) return;
+    if (initializer.firstName) this.firstName = initializer.firstName;
+    if (initializer.lastName) this.lastName = initializer.lastName;
+    if (initializer.email) this.email = initializer.email;
+    if (initializer.phone) this.phone = initializer.phone;
+    if (initializer.title) this.title = initializer.title;
+    if (initializer.bio) this.bio = initializer.bio;
+    if (initializer.password) this.password = initializer.password;
+  }
 }
 
 export const testUser: User = {
+  id: 1,
   firstName: "John",
   lastName: "Doe",
   email: "john.doe@example.com",

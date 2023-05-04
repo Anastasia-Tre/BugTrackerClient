@@ -49,7 +49,7 @@ const TaskCardShort = (props: { task: Task }) => {
             color={colors.grey[200]}
             sx={{ m: "0px 0 0px 3px" }}
           >
-            {task.deadline}
+            {task.deadline.getDate()}
           </Typography>
         </Box>
 

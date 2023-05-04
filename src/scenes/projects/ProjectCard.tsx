@@ -65,7 +65,7 @@ const ProjectCard = (props: { project: Project }) => {
             color={colors.grey[200]}
             sx={{ m: "0px 0 0px 3px" }}
           >
-            {project.deadline}
+            {project.deadline.getDate()}
           </Typography>
         </Box>
       </Box>

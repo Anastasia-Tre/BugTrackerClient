@@ -170,10 +170,10 @@ const TaskForm = (props: { task: Task }) => {
                   label="Difficults"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.difficults}
+                  value={values.difficulty}
                   name="difficults"
-                  error={!!touched.difficults && !!errors.difficults}
-                  helperText={touched.difficults && errors.difficults}
+                  error={!!touched.difficulty && !!errors.difficulty}
+                  helperText={touched.difficulty && errors.difficulty}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField

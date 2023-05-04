@@ -1,11 +1,11 @@
 export class Project {
-  id!: number;
-  name!: string;
-  description!: string;
-  deadline!: string;
-  status!: string; //"OPEN" | "CLOSED" | "CURRENT";
-  bugs!: number[];
-  team!: number[];
+  public id: number | undefined;
+  public name: string = "";
+  public description: string = "";
+  public deadline: Date = new Date();
+  public status: string = "OPEN"; //"OPEN" | "CLOSED" | "CURRENT";
+  public bugs: number[] | undefined;
+  public team: number[] | undefined;
 
   getTotalTasks() {
     return 50;
