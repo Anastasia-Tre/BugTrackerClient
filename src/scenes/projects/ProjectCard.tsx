@@ -4,6 +4,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Project } from "../../types/Project";
 import GetLabel from "../../components/Label";
+import { getTimeLeftTo } from "../../utils/TimeDate";
 
 const ProjectCard = (props: { project: Project }) => {
   const project = props.project;
@@ -65,7 +66,7 @@ const ProjectCard = (props: { project: Project }) => {
             color={colors.grey[200]}
             sx={{ m: "0px 0 0px 3px" }}
           >
-            {project.deadline.getDate()}
+            {getTimeLeftTo(project.deadline)}
           </Typography>
         </Box>
       </Box>

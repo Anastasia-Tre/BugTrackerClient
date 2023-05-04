@@ -16,7 +16,7 @@ export class Task {
     if (initializer.name) this.name = initializer.name;
     if (initializer.description) this.description = initializer.description;
     if (initializer.project) this.project = initializer.project;
-    if (initializer.deadline) this.deadline = initializer.deadline;
+    if (initializer.deadline) this.deadline = new Date(initializer.deadline);
 
     const statuses = ["NEW", "PROGRESS", "TESTING", "CLOSED"];
     if (initializer.status) this.status = statuses[initializer.status - 1];

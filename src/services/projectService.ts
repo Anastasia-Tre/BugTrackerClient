@@ -14,11 +14,14 @@ export class ProjectService {
 
   async getAllProjects(): Promise<Project[]> {
     try {
-      const { data, status } = await axios.get<Project[]>(GET_ALL_PROJECTS(), {
-        headers: {
-          Accept: "application/json",
-        },
-      });
+      const { data, status: responseStatus } = await axios.get<Project[]>(
+        GET_ALL_PROJECTS(),
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
 
       return this.convertToProjectModels(data);
     } catch (error) {

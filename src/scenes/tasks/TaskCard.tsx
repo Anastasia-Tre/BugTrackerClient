@@ -3,6 +3,7 @@ import { tokens } from "../../theme";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import GetLabel from "../../components/Label";
 import { Task } from "../../types/Task";
+import { getTimeLeftTo } from "../../utils/TimeDate";
 
 const TaskCard = (props: { task: Task }) => {
   const task = props.task;
@@ -66,7 +67,7 @@ const TaskCard = (props: { task: Task }) => {
             color={colors.grey[200]}
             sx={{ m: "0px 0 0px 3px" }}
           >
-            {task.deadline.getDate()}
+            {getTimeLeftTo(task.deadline)}
           </Typography>
         </Box>
       </Box>
