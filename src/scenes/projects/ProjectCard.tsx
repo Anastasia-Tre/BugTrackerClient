@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
+import { tokens } from "../../theme/theme";
 import LinearProgress from "@mui/material/LinearProgress";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Project } from "../../types/Project";
@@ -34,7 +34,7 @@ const ProjectCard = (props: { project: Project }) => {
 
           <Typography
             variant="h4"
-            color={colors.grey[100]}
+            color={colors.grey[1]}
             fontWeight="bold"
             sx={{ m: "10px 0 5px 0" }}
           >
@@ -45,7 +45,7 @@ const ProjectCard = (props: { project: Project }) => {
           <Box sx={{ m: "0px 5px 0px 0px" }}>
             <Typography
               variant="h5"
-              color={colors.grey[100]}
+              color={colors.grey[1]}
               sx={{ m: "10px 0 5px 0" }}
             >
               Tasks done: {project.getDoneTasks()} / {project.getTotalTasks()}
@@ -63,7 +63,7 @@ const ProjectCard = (props: { project: Project }) => {
           <AccessTimeIcon />
           <Typography
             variant="h6"
-            color={colors.grey[200]}
+            color={colors.grey[2]}
             sx={{ m: "0px 0 0px 3px" }}
           >
             {getTimeLeftTo(project.deadline)}

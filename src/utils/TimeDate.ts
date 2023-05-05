@@ -7,7 +7,6 @@ export const getTimeLeftTo = (date: Date): string => {
   );
   if (daysLeft > 0) return daysLeft + "d";
 
-  // Find the number of hours left between two dates
   const millisecondsPerHour = 1000 * 60 * 60;
   let hoursLeft = Math.ceil(
     (date.getTime() - today.getTime()) / millisecondsPerHour

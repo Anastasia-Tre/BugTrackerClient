@@ -1,5 +1,5 @@
 import { Box, Divider, Typography, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
+import { tokens } from "../../theme/theme";
 import Header from "../../components/Header";
 import TaskCardShort from "../tasks/TaskCardShort";
 import { testData } from "../../types/Task";
@@ -24,12 +24,12 @@ const Dashboard = () => {
         width="40%"
         sx={{ m: "0 0 5px 0" }}
       >
-        <Typography fontSize="20px" color={colors.grey[400]} align="center">
+        <Typography fontSize="20px" color={colors.grey[4]} align="center">
           TASK IN FOCUS
         </Typography>
         <Divider
           style={{
-            backgroundColor: colors.grey[400],
+            backgroundColor: colors.grey[4],
             height: "1px",
             marginBottom: 1,
           }}
@@ -39,12 +39,12 @@ const Dashboard = () => {
 
       {/* NOW OR LATER? */}
       <Box display="flex" flexDirection="column" flexWrap="wrap" width="40%">
-        <Typography fontSize="20px" color={colors.grey[400]} align="center">
+        <Typography fontSize="20px" color={colors.grey[4]} align="center">
           NOW OR LATER?
         </Typography>
         <Divider
           style={{
-            backgroundColor: colors.grey[400],
+            backgroundColor: colors.grey[4],
             height: "1px",
             marginBottom: 1,
           }}

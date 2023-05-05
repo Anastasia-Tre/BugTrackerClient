@@ -11,7 +11,7 @@ import Header from "../../components/Header";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Task } from "../../types/Task";
-import { tokens } from "../../theme";
+import { tokens } from "../../theme/theme";
 
 const TaskForm = (props: { task: Task }) => {
   const theme = useTheme();
@@ -243,7 +243,7 @@ const TaskForm = (props: { task: Task }) => {
                 variant="contained"
                 sx={{ ml: "10px" }}
                 style={{
-                  backgroundColor: colors.redAccent[500],
+                  backgroundColor: colors.redAccent[5],
                   color: "black",
                 }}
               >

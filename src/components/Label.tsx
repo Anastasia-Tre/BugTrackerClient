@@ -1,5 +1,5 @@
 import { Box, Chip, useTheme } from "@mui/material";
-import { tokens } from "../theme";
+import { tokens } from "../theme/theme";
 
 const Label = (props: { text: string; color: string }) => {
   return (
@@ -27,20 +27,20 @@ const GetLabel = (label: string) => {
   const colors = tokens(theme.palette.mode);
 
   const labels: { [key: string]: LabelProps } = {
-    current: { text: "CURRENT", color: colors.greenAccent[400] },
-    open: { text: "OPEN", color: colors.greenAccent[400] },
-    closed: { text: "CLOSED", color: colors.redAccent[400] },
-    bug: { text: "BUG", color: colors.greenAccent[400] },
-    task: { text: "TASK", color: colors.greenAccent[400] },
-    issue: { text: "ISSUE", color: colors.greenAccent[400] },
-    feature: { text: "FEATURE", color: colors.greenAccent[400] },
-    new: { text: "NEW", color: colors.greenAccent[400] },
-    progress: { text: "IN PROGRESS", color: colors.greenAccent[400] },
-    testing: { text: "IN TESTING", color: colors.greenAccent[400] },
-    minor: { text: "MINOR", color: colors.greenAccent[400] },
-    low: { text: "LOW", color: colors.greenAccent[400] },
-    medium: { text: "MEDIUM", color: colors.greenAccent[400] },
-    high: { text: "HIGH", color: colors.redAccent[400] },
+    current: { text: "CURRENT", color: colors.greenAccent[4] },
+    open: { text: "OPEN", color: colors.greenAccent[4] },
+    closed: { text: "CLOSED", color: colors.redAccent[4] },
+    bug: { text: "BUG", color: colors.greenAccent[4] },
+    task: { text: "TASK", color: colors.greenAccent[4] },
+    issue: { text: "ISSUE", color: colors.greenAccent[4] },
+    feature: { text: "FEATURE", color: colors.greenAccent[4] },
+    new: { text: "NEW", color: colors.greenAccent[4] },
+    progress: { text: "IN PROGRESS", color: colors.greenAccent[4] },
+    testing: { text: "IN TESTING", color: colors.greenAccent[4] },
+    minor: { text: "MINOR", color: colors.greenAccent[4] },
+    low: { text: "LOW", color: colors.greenAccent[4] },
+    medium: { text: "MEDIUM", color: colors.greenAccent[4] },
+    high: { text: "HIGH", color: colors.redAccent[4] },
     default: { text: "", color: "" },
   };
 

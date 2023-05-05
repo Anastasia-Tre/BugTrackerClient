@@ -11,7 +11,7 @@ import Header from "../../components/Header";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Project } from "../../types/Project";
-import { tokens } from "../../theme";
+import { tokens } from "../../theme/theme";
 
 const ProjectForm = (props: { project: Project }) => {
   const theme = useTheme();
@@ -124,7 +124,7 @@ const ProjectForm = (props: { project: Project }) => {
                 variant="contained"
                 sx={{ ml: "10px" }}
                 style={{
-                  backgroundColor: colors.redAccent[500],
+                  backgroundColor: colors.redAccent[5],
                   color: "black",
                 }}
               >

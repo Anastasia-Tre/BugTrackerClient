@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Project } from "../types/Project";
-import { GET_ALL_PROJECTS } from "./CONSTANTS";
+import { GET_ALL_PROJECTS, CREATE_PROJECT } from "./CONSTANTS";
 
 export class ProjectService {
   convertToProjectModels(data: any[]): Project[] {
@@ -14,65 +14,61 @@ export class ProjectService {
 
   async getAllProjects(): Promise<Project[]> {
     try {
-      const { data, status: responseStatus } = await axios.get<Project[]>(
-        GET_ALL_PROJECTS(),
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      );
+      const { data } = await axios.get<Project[]>(GET_ALL_PROJECTS(), {
+        headers: {
+          Accept: "application/json",
+        },
+      });
 
-      return this.convertToProjectModels(data);
+      const projects = data.map((item) => new Project(item));
+      //console.log("All projects:", projects);
+      return projects;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return [];
-      } else {
-        console.log("unexpected error: ", error);
-        return [];
-      }
+      console.log("Failed to get projects:", error);
+      throw new Error("Failed to get projects");
     }
   }
-
   async filterProjects(name?: string, status?: string): Promise<Project[]> {
+    const projects = await this.getAllProjects();
+    let filteredProjects = [...projects];
+
+    if (name) {
+      filteredProjects = filteredProjects.filter((project) =>
+        project.name.toLowerCase().includes(name.toLowerCase())
+      );
+    }
+
+    if (status) {
+      filteredProjects = filteredProjects.filter(
+        (project) => project.status === status
+      );
+    }
+
+    // console.log(
+    //   `Filtered projects by name=${name} and status=${status}:`,
+    //   filteredProjects
+    // );
+
+    return filteredProjects;
+  }
+
+  async createProject(project: Project) {
     try {
-      const { data, status: responseStatus } = await axios.get<Project[]>(
-        GET_ALL_PROJECTS(),
+      const { data, status: responseStatus } = await axios.post<Project>(
+        CREATE_PROJECT(),
+        project,
         {
           headers: {
             Accept: "application/json",
+            "Content-Type": "application/json",
           },
         }
       );
-
-      let filteredProjects = this.convertToProjectModels(data);
-
-      if (name) {
-        filteredProjects = filteredProjects.filter((project) =>
-          project.name.toLowerCase().includes(name.toLowerCase())
-        );
-      }
-
-      if (status) {
-        filteredProjects = filteredProjects.filter(
-          (project) => project.status === status
-        );
-      }
-
-      console.log(
-        `Filtered projects by name=${name} and status=${status}:`,
-        filteredProjects
-      );
-
-      return filteredProjects;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
-        throw new Error("Failed to get projects");
       } else {
         console.log("unexpected error: ", error);
-        throw error;
       }
     }
   }

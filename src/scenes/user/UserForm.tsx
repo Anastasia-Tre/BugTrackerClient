@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { User } from "../../types/User";
-import { tokens } from "../../theme";
+import { tokens } from "../../theme/theme";
 
 const UserForm = (props: { user: User }) => {
   const theme = useTheme();
@@ -163,7 +163,7 @@ const UserForm = (props: { user: User }) => {
                 variant="contained"
                 sx={{ ml: "10px" }}
                 style={{
-                  backgroundColor: colors.redAccent[500],
+                  backgroundColor: colors.redAccent[5],
                   color: "black",
                 }}
               >

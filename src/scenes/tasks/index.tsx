@@ -9,7 +9,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import Header from "../../components/Header";
-import { tokens } from "../../theme";
+import { tokens } from "../../theme/theme";
 import { testData } from "../../types/Task";
 import TaskCard from "./TaskCard";
 import TaskForm from "./TaskForm";

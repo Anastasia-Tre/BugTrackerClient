@@ -1,5 +1,5 @@
 import { Box, IconButton, InputBase, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
+import { tokens } from "../../theme/theme";
 
 const SearchBar = () => {
   const theme = useTheme();
@@ -9,7 +9,7 @@ const SearchBar = () => {
     <Box display="flex" justifyContent="space-between" p={2}>
       <Box
         display="flex"
-        // backgroundColor={colors.primary[400]}
+        // backgroundColor={colors.primary[4]}
         borderRadius="3px"
       >
         <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />

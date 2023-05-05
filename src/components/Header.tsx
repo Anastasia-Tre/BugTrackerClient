@@ -1,22 +1,26 @@
-import { Typography, Box, useTheme } from "@mui/material";
-import { tokens } from "../theme";
+import { FC } from "react";
+import { Typography, Box } from "@mui/material";
+import { useTheme, Theme } from "@mui/material/styles";
+import { tokens } from "../theme/theme";
 
-const Header = (props: { title?: string; subtitle?: string }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+interface HeaderProps {
+  title?: string;
+  subtitle?: string;
+}
+
+const Header: FC<HeaderProps> = ({ title, subtitle }) => {
+  const theme: Theme = useTheme();
+  const { grey, greenAccent } = tokens(theme.palette.mode);
   return (
-    <Box mb="20px">
-      <Typography
-        variant="h2"
-        color={colors.grey[100]}
-        fontWeight="bold"
-        sx={{ m: "0 0 5px 0" }}
-      >
-        {props.title}
+    <Box mb={2}>
+      <Typography variant="h2" color={grey[1]} fontWeight="bold" sx={{ mb: 1 }}>
+        {title}
       </Typography>
-      <Typography variant="h5" color={colors.greenAccent[400]}>
-        {props.subtitle}
-      </Typography>
+      {subtitle && (
+        <Typography variant="h5" color={greenAccent[4]}>
+          {subtitle}
+        </Typography>
+      )}
     </Box>
   );
 };

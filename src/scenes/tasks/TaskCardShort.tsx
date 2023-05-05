@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
+import { tokens } from "../../theme/theme";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import GetLabel from "../../components/Label";
 import { Task } from "../../types/Task";
@@ -47,7 +47,7 @@ const TaskCardShort = (props: { task: Task }) => {
           <AccessTimeIcon />
           <Typography
             variant="h6"
-            color={colors.grey[200]}
+            color={colors.grey[2]}
             sx={{ m: "0px 0 0px 3px" }}
           >
             {getTimeLeftTo(task.deadline)}
@@ -58,7 +58,7 @@ const TaskCardShort = (props: { task: Task }) => {
         <Box sx={{ gridColumn: "span 10" }}>
           <Typography
             variant="h4"
-            color={colors.grey[100]}
+            color={colors.grey[1]}
             fontWeight="bold"
             sx={{ m: "10px 0 0 0" }}
           >
