@@ -59,6 +59,10 @@ export const darkColors = {
     "#2a2d64",
     "#151632",
   ],
+  pinkAccent: ["#F06292"],
+  orangeAccent: ["#EF5350"],
+  yellowAccent: ["#F4FF81"],
+  brownAccent: ["#A1887F"],
 };
 
 export const lightColors = {
@@ -126,4 +130,9 @@ export const lightColors = {
     "#c3c6fd",
     "#e1e2fe",
   ],
+
+  pinkAccent: ["#EC407A"],
+  orangeAccent: ["#E53935"],
+  yellowAccent: ["#CDDC39"],
+  brownAccent: ["#5D4037"],
 };
