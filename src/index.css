@@ -4,15 +4,23 @@ html,
 body,
 #root,
 .app {
-  height: max-content;
-  width: 100%;
-  font-family: "Source Sans Pro", sans-serif;
-}
-.content {
   height: 100%;
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
 }
+.content {
+  height: auto;
+  width: 100%;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.rps-container {
+  height: 100vh;
+}
+.rps-sidebar {
+  height: 100vh;
+}
+
 
 .app {
   display: flex;
