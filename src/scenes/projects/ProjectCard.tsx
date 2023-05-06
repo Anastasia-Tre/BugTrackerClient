@@ -1,13 +1,18 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Link } from "react-router-dom";
 import { tokens } from "../../theme/theme";
 import LinearProgress from "@mui/material/LinearProgress";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Project } from "../../types/Project";
 import GetLabel from "../../components/Label";
 import { getTimeLeftTo } from "../../utils/TimeDate";
+import { PROJECTS } from "../../navigation/CONSTANTS";
 
-const ProjectCard = (props: { project: Project }) => {
-  const project = props.project;
+interface ProjectCardProps {
+  project: Project;
+}
+
+const ProjectCard = ({ project }: ProjectCardProps) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -29,7 +34,7 @@ const ProjectCard = (props: { project: Project }) => {
         <Box display="flex" flexDirection="column">
           {/* LABELS BOX */}
           <Box display="flex" mb="3px">
-            {GetLabel(project.status.toLowerCase())}
+            {GetLabel(project.getStatus().toLowerCase())}
           </Box>
 
           <Typography
@@ -58,16 +63,31 @@ const ProjectCard = (props: { project: Project }) => {
           </Box>
         </Box>
 
+        {/* <Box display="flex"> */}
+        <Box display="flex"></Box>
+
         {/* TIME ICON */}
-        <Box display="flex" justifyContent="flex-end">
-          <AccessTimeIcon />
-          <Typography
-            variant="h6"
-            color={colors.grey[2]}
-            sx={{ m: "0px 0 0px 3px" }}
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          sx={{ m: "0px 0 0px 3px" }}
+        >
+          <Link
+            to={PROJECTS + "/" + project.id}
+            state={{ stateProject: project }}
           >
-            {getTimeLeftTo(project.deadline)}
-          </Typography>
+            <Button size="small">Edit</Button>
+          </Link>
+          <Box display="flex" justifyContent="flex-end">
+            <AccessTimeIcon />
+            <Typography
+              variant="h6"
+              color={colors.grey[2]}
+              sx={{ m: "0px 0 0px 3px" }}
+            >
+              {getTimeLeftTo(project.deadline)}
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </div>

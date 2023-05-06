@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Project } from "../types/Project";
-import { GET_ALL_PROJECTS, CREATE_PROJECT } from "./CONSTANTS";
+import { GET_ALL_PROJECTS, CREATE_PROJECT, GET_PROJECT } from "./CONSTANTS";
 
 export class ProjectService {
   convertToProjectModels(data: any[]): Project[] {
@@ -10,6 +10,22 @@ export class ProjectService {
 
   convertToProjectModel(item: any): Project {
     return new Project(item);
+  }
+
+  async getProjectById(id: number): Promise<Project> {
+    try {
+      const { data } = await axios.get<Project>(GET_PROJECT() + "id", {
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      const project = this.convertToProjectModel(data);
+      return project;
+    } catch (error) {
+      console.log("Failed to get project:", error);
+      throw new Error("Failed to get project");
+    }
   }
 
   async getAllProjects(): Promise<Project[]> {
@@ -28,6 +44,7 @@ export class ProjectService {
       throw new Error("Failed to get projects");
     }
   }
+
   async filterProjects(name?: string, status?: string): Promise<Project[]> {
     const projects = await this.getAllProjects();
     let filteredProjects = [...projects];
@@ -40,7 +57,7 @@ export class ProjectService {
 
     if (status) {
       filteredProjects = filteredProjects.filter(
-        (project) => project.status === status
+        (project) => project.getStatus() === status
       );
     }
 
@@ -56,8 +73,50 @@ export class ProjectService {
     try {
       const { data, status: responseStatus } = await axios.post<Project>(
         CREATE_PROJECT(),
-        project,
+        JSON.stringify(project),
         {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+      } else {
+        console.log("unexpected error: ", error);
+      }
+    }
+  }
+
+  async updateProject(project: Project) {
+    try {
+      const { data, status: responseStatus } = await axios.post<Project>(
+        GET_PROJECT() + project.id,
+        JSON.stringify(project),
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+      } else {
+        console.log("unexpected error: ", error);
+      }
+    }
+  }
+
+  async deleteProject(project: Project) {
+    try {
+      const { data, status: responseStatus } = await axios.delete<Project>(
+        GET_PROJECT() + project.id,
+        {
+          data: JSON.stringify(project),
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",

@@ -3,7 +3,8 @@ export class Project {
   public name: string = "";
   public description: string = "";
   public deadline: Date = new Date();
-  public status: string = "OPEN"; //"OPEN" | "CLOSED" | "CURRENT";
+  public status: number = 0; //string = "OPEN"; //"OPEN" | "CLOSED" | "CURRENT";
+  public authorId: number = 1;
   public bugs: number[] | undefined;
   public team: number[] | undefined;
 
@@ -21,8 +22,12 @@ export class Project {
     if (initializer.name) this.name = initializer.name;
     if (initializer.description) this.description = initializer.description;
     if (initializer.deadline) this.deadline = new Date(initializer.deadline);
+    if (initializer.authorId) this.authorId = initializer.authorId;
+    if (initializer.status) this.status = initializer.status;
+  }
 
+  getStatus(): string {
     const statuses = ["OPEN", "CLOSED", "CURRENT"];
-    if (initializer.status) this.status = statuses[initializer.status - 1];
+    return statuses[this.status - 1];
   }
 }

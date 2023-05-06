@@ -12,20 +12,33 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { Project } from "../../types/Project";
 import { tokens } from "../../theme/theme";
+import { ProjectService } from "../../services/projectService";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import { PROJECTS } from "../../navigation/CONSTANTS";
 
 const ProjectForm = (props: { project: Project }) => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const project = props.project;
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSave = (values: Project) => {
+  const service = new ProjectService();
+
+  const handleFormSave = async (values: Project) => {
+    if (!values.id) {
+      await service.createProject(values);
+    } else await service.updateProject(values);
     console.log("Save " + values.name);
+    navigate(-1);
   };
 
-  const handleFormDelete = (values: Project) => {
+  const handleFormDelete = async (values: Project) => {
+    await service.deleteProject(values);
     console.log("Delete " + values.name);
+    navigate(-1);
   };
 
   return (
@@ -74,6 +87,7 @@ const ProjectForm = (props: { project: Project }) => {
                 variant="filled"
                 type="text"
                 label="Description"
+                multiline={true}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.description}
@@ -84,12 +98,12 @@ const ProjectForm = (props: { project: Project }) => {
               />
               <DatePicker
                 label="Deadline"
-                value={Date.now}
+                value={dayjs(values.deadline)}
                 onChange={(value) => {
                   handleChange({
                     target: {
                       name: "deadline",
-                      value: value?.toString().substr(0, 10) || "",
+                      value: value,
                     },
                   });
                 }}
@@ -110,9 +124,9 @@ const ProjectForm = (props: { project: Project }) => {
                 helperText={touched.status && errors.status}
                 sx={{ gridColumn: "span 4" }}
               >
-                <MenuItem value="OPEN">Open</MenuItem>
-                <MenuItem value="CLOSED">Closed</MenuItem>
-                <MenuItem value="CURRENT">Current</MenuItem>
+                <MenuItem value={1}>Open</MenuItem>
+                <MenuItem value={2}>Closed</MenuItem>
+                <MenuItem value={3}>Current</MenuItem>
               </TextField>
             </Box>
             <Box display="flex" mt="20px">
@@ -141,10 +155,10 @@ const ProjectForm = (props: { project: Project }) => {
 const checkoutSchema = yup.object().shape({
   name: yup.string().required("required"),
   description: yup.string().required("required"),
-  status: yup
-    .string()
-    .oneOf(["OPEN", "CLOSED", "CURRENT"])
-    .required("required"),
+  status: yup.number().required("required"),
 });
 
 export default ProjectForm;
+function useHistory() {
+  throw new Error("Function not implemented.");
+}

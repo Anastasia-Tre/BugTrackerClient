@@ -5,6 +5,7 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import Header from "../../components/Header";
@@ -13,6 +14,7 @@ import ProjectCard from "./ProjectCard";
 import ProjectForm from "./ProjectForm";
 import { useEffect, useState } from "react";
 import { ProjectService } from "../../services/projectService";
+import { PROJECTS } from "../../navigation/CONSTANTS";
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -101,8 +103,10 @@ const Projects = () => {
         >
           FILTER
         </Button>
+
         <Button
-          onClick={(e) => console.log("create")}
+          component={Link}
+          to={PROJECTS + "/new"}
           color="secondary"
           variant="contained"
           sx={{ gridColumn: "span 1" }}
