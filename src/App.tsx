@@ -9,9 +9,9 @@ import Projects from "./scenes/projects";
 import Tasks from "./scenes/tasks";
 import User from "./scenes/user";
 import { PROJECTS, ROOT, TASKS, USER } from "./navigation/CONSTANTS";
-import ProjectForm from "./scenes/projects/ProjectForm";
 import EditProjectPage from "./scenes/projects/EditProjectForm";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import EditTaskPage from "./scenes/tasks/EditTaskForm";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -27,7 +27,8 @@ function App() {
               <Routes>
                 <Route path={PROJECTS + "/:id"} Component={EditProjectPage} />
                 <Route path={ROOT} element={<Dashboard />} />
-                <Route path={PROJECTS} element={<Projects />}></Route>
+                <Route path={PROJECTS} element={<Projects />} />
+                <Route path={TASKS + "/:id"} Component={EditTaskPage} />
                 <Route path={TASKS} element={<Tasks />} />
                 <Route path={USER} element={<User />} />
               </Routes>

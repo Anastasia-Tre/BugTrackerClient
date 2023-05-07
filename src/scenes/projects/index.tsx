@@ -11,7 +11,6 @@ import AddIcon from "@mui/icons-material/Add";
 import Header from "../../components/Header";
 import { Project } from "../../types/Project";
 import ProjectCard from "./ProjectCard";
-import ProjectForm from "./ProjectForm";
 import { useEffect, useState } from "react";
 import { ProjectService } from "../../services/projectService";
 import { PROJECTS } from "../../navigation/CONSTANTS";
@@ -116,7 +115,6 @@ const Projects = () => {
         </Button>
       </Box>
 
-      {/* <ProjectForm project={project1} /> */}
       {/* PROJECTS LIST */}
       <Box display="flex" flexWrap="wrap" width="100%" gap={1}>
         {projects.map((project, index) => (

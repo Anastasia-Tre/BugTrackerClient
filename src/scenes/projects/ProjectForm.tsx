@@ -15,7 +15,6 @@ import { tokens } from "../../theme/theme";
 import { ProjectService } from "../../services/projectService";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-import { PROJECTS } from "../../navigation/CONSTANTS";
 
 const ProjectForm = (props: { project: Project }) => {
   const navigate = useNavigate();
@@ -125,8 +124,8 @@ const ProjectForm = (props: { project: Project }) => {
                 sx={{ gridColumn: "span 4" }}
               >
                 <MenuItem value={1}>Open</MenuItem>
-                <MenuItem value={2}>Closed</MenuItem>
-                <MenuItem value={3}>Current</MenuItem>
+                <MenuItem value={2}>Current</MenuItem>
+                <MenuItem value={3}>Closed</MenuItem>
               </TextField>
             </Box>
             <Box display="flex" mt="20px">

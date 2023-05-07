@@ -3,7 +3,7 @@ export class Project {
   public name: string = "";
   public description: string = "";
   public deadline: Date = new Date();
-  public status: number = 0; //string = "OPEN"; //"OPEN" | "CLOSED" | "CURRENT";
+  public status: number = 1; //string = "OPEN"; //"OPEN" | "CURRENT" | "CLOSED";
   public authorId: number = 1;
   public bugs: number[] | undefined;
   public team: number[] | undefined;
@@ -27,7 +27,7 @@ export class Project {
   }
 
   getStatus(): string {
-    const statuses = ["OPEN", "CLOSED", "CURRENT"];
+    const statuses = ["OPEN", "CURRENT", "CLOSED"];
     return statuses[this.status - 1];
   }
 }

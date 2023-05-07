@@ -12,20 +12,32 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { Task } from "../../types/Task";
 import { tokens } from "../../theme/theme";
+import { useNavigate } from "react-router-dom";
+import { TaskService } from "../../services/taskService";
+import dayjs from "dayjs";
 
 const TaskForm = (props: { task: Task }) => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const task = props.task;
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSave = (values: Task) => {
+  const service = new TaskService();
+
+  const handleFormSave = async (values: Task) => {
+    if (!values.id) {
+      await service.createTask(values);
+    } else await service.updateTask(values);
     console.log("Save " + values.name);
+    navigate(-1);
   };
 
-  const handleFormDelete = (values: Task) => {
+  const handleFormDelete = async (values: Task) => {
+    await service.deleteTask(values);
     console.log("Delete " + values.name);
+    navigate(-1);
   };
 
   return (
@@ -85,10 +97,10 @@ const TaskForm = (props: { task: Task }) => {
                   label="Project"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.project}
+                  value={values.projectId}
                   name="project"
-                  error={!!touched.project && !!errors.project}
-                  helperText={touched.project && errors.project}
+                  error={!!touched.projectId && !!errors.projectId}
+                  helperText={touched.projectId && errors.projectId}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
@@ -105,10 +117,10 @@ const TaskForm = (props: { task: Task }) => {
                   helperText={touched.status && errors.status}
                   sx={{ gridColumn: "span 4" }}
                 >
-                  <MenuItem value="NEW">New</MenuItem>
-                  <MenuItem value="PROGRESS">In Progress</MenuItem>
-                  <MenuItem value="TESTING">Testing</MenuItem>
-                  <MenuItem value="CLOSED">Closed</MenuItem>
+                  <MenuItem value={1}>New</MenuItem>
+                  <MenuItem value={2}>In Progress</MenuItem>
+                  <MenuItem value={3}>In Testing</MenuItem>
+                  <MenuItem value={4}>Closed</MenuItem>
                 </TextField>
                 <TextField
                   fullWidth
@@ -124,10 +136,10 @@ const TaskForm = (props: { task: Task }) => {
                   helperText={touched.type && errors.type}
                   sx={{ gridColumn: "span 4" }}
                 >
-                  <MenuItem value="BUG">Bug</MenuItem>
-                  <MenuItem value="TASK">Task</MenuItem>
-                  <MenuItem value="ISSUE">Issue</MenuItem>
-                  <MenuItem value="FEATURE">Feature</MenuItem>
+                  <MenuItem value={1}>Issue</MenuItem>
+                  <MenuItem value={2}>Feature</MenuItem>
+                  <MenuItem value={3}>Task</MenuItem>
+                  <MenuItem value={4}>Bug</MenuItem>
                 </TextField>
 
                 <TextField
@@ -144,19 +156,19 @@ const TaskForm = (props: { task: Task }) => {
                   helperText={touched.priority && errors.priority}
                   sx={{ gridColumn: "span 4" }}
                 >
-                  <MenuItem value="MINOR">Minor</MenuItem>
-                  <MenuItem value="LOW">Low</MenuItem>
-                  <MenuItem value="MEDIUM">Medium</MenuItem>
-                  <MenuItem value="HIGH">High</MenuItem>
+                  <MenuItem value={1}>Minor</MenuItem>
+                  <MenuItem value={2}>Low</MenuItem>
+                  <MenuItem value={3}>Normal</MenuItem>
+                  <MenuItem value={4}>High</MenuItem>
                 </TextField>
                 <DatePicker
                   label="Deadline"
-                  value={Date.now}
+                  value={dayjs(values.deadline)}
                   onChange={(value) => {
                     handleChange({
                       target: {
                         name: "deadline",
-                        value: value?.toString().substr(0, 10) || "",
+                        value: value,
                       },
                     });
                   }}
@@ -167,11 +179,11 @@ const TaskForm = (props: { task: Task }) => {
                   fullWidth
                   variant="filled"
                   type="number"
-                  label="Difficults"
+                  label="Difficulty"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.difficulty}
-                  name="difficults"
+                  name="difficulty"
                   error={!!touched.difficulty && !!errors.difficulty}
                   helperText={touched.difficulty && errors.difficulty}
                   sx={{ gridColumn: "span 4" }}
@@ -186,10 +198,10 @@ const TaskForm = (props: { task: Task }) => {
                   }}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.author}
+                  value={values.authorId}
                   name="author"
-                  error={!!touched.author && !!errors.author}
-                  helperText={touched.author && errors.author}
+                  error={!!touched.authorId && !!errors.authorId}
+                  helperText={touched.authorId && errors.authorId}
                   sx={{ gridColumn: "span 4" }}
                 />
               </Box>
@@ -210,10 +222,10 @@ const TaskForm = (props: { task: Task }) => {
                   label="Assigned To"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.assignee}
+                  value={values.assignedId}
                   name="assignee"
-                  error={!!touched.assignee && !!errors.assignee}
-                  helperText={touched.assignee && errors.assignee}
+                  error={!!touched.assignedId && !!errors.assignedId}
+                  helperText={touched.assignedId && errors.assignedId}
                   sx={{ gridColumn: "span 4", gridRow: "span 1" }}
                 />
                 <TextField
@@ -260,22 +272,10 @@ const TaskForm = (props: { task: Task }) => {
 const checkoutSchema = yup.object().shape({
   name: yup.string().required("required"),
   description: yup.string().required("required"),
-  project: yup.string().required("required"),
   deadline: yup.string().required("required"),
-  status: yup
-    .string()
-    .oneOf(["NEW", "PROGRESS", "TESTING", "CLOSED"])
-    .required("required"),
-  type: yup
-    .string()
-    .oneOf(["BUG", "TASK", "ISSUE", "FEATURE"])
-    .required("required"),
-  assignee: yup.string().required("required"),
-  author: yup.string().required("required"),
-  priority: yup
-    .string()
-    .oneOf(["MINOR", "LOW", "MEDIUM", "HIGH"])
-    .required("required"),
+  status: yup.number().required("required"),
+  type: yup.number().required("required"),
+  priority: yup.number().required("required"),
   difficulty: yup.number().required("required"),
 });
 

@@ -3,49 +3,49 @@ import { Project } from "../types/Project";
 import { GET_ALL_PROJECTS, CREATE_PROJECT, GET_PROJECT } from "./CONSTANTS";
 
 export class ProjectService {
-  convertToProjectModels(data: any[]): Project[] {
-    let projects: Project[] = data.map(this.convertToProjectModel);
-    return projects;
-  }
+  private axiosInstance = axios.create({
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
 
-  convertToProjectModel(item: any): Project {
+  private convertToProjectModel(item: any): Project {
     return new Project(item);
   }
 
-  async getProjectById(id: number): Promise<Project> {
-    try {
-      const { data } = await axios.get<Project>(GET_PROJECT() + "id", {
-        headers: {
-          Accept: "application/json",
-        },
-      });
+  private convertToProjectModels(data: any[]): Project[] {
+    return data.map(this.convertToProjectModel);
+  }
 
-      const project = this.convertToProjectModel(data);
-      return project;
+  public async getProjectById(id: number): Promise<Project> {
+    try {
+      const { data } = await this.axiosInstance.get<Project>(
+        `${GET_PROJECT()}${id}`
+      );
+      return this.convertToProjectModel(data);
     } catch (error) {
       console.log("Failed to get project:", error);
       throw new Error("Failed to get project");
     }
   }
 
-  async getAllProjects(): Promise<Project[]> {
+  public async getAllProjects(): Promise<Project[]> {
     try {
-      const { data } = await axios.get<Project[]>(GET_ALL_PROJECTS(), {
-        headers: {
-          Accept: "application/json",
-        },
-      });
-
-      const projects = data.map((item) => new Project(item));
-      //console.log("All projects:", projects);
-      return projects;
+      const { data } = await this.axiosInstance.get<Project[]>(
+        GET_ALL_PROJECTS()
+      );
+      return this.convertToProjectModels(data);
     } catch (error) {
       console.log("Failed to get projects:", error);
       throw new Error("Failed to get projects");
     }
   }
 
-  async filterProjects(name?: string, status?: string): Promise<Project[]> {
+  public async filterProjects(
+    name?: string,
+    status?: string
+  ): Promise<Project[]> {
     const projects = await this.getAllProjects();
     let filteredProjects = [...projects];
 
@@ -61,26 +61,16 @@ export class ProjectService {
       );
     }
 
-    // console.log(
-    //   `Filtered projects by name=${name} and status=${status}:`,
-    //   filteredProjects
-    // );
-
     return filteredProjects;
   }
 
-  async createProject(project: Project) {
+  public async createProject(project: Project) {
     try {
-      const { data, status: responseStatus } = await axios.post<Project>(
-        CREATE_PROJECT(),
-        JSON.stringify(project),
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const { data, status: responseStatus } =
+        await this.axiosInstance.post<Project>(
+          CREATE_PROJECT(),
+          JSON.stringify(project)
+        );
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -90,18 +80,13 @@ export class ProjectService {
     }
   }
 
-  async updateProject(project: Project) {
+  public async updateProject(project: Project) {
     try {
-      const { data, status: responseStatus } = await axios.post<Project>(
-        GET_PROJECT() + project.id,
-        JSON.stringify(project),
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const { data, status: responseStatus } =
+        await this.axiosInstance.post<Project>(
+          `${GET_PROJECT()}${project.id}`,
+          JSON.stringify(project)
+        );
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -111,18 +96,13 @@ export class ProjectService {
     }
   }
 
-  async deleteProject(project: Project) {
+  public async deleteProject(project: Project) {
     try {
-      const { data, status: responseStatus } = await axios.delete<Project>(
-        GET_PROJECT() + project.id,
-        {
-          data: JSON.stringify(project),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const { data, status: responseStatus } =
+        await this.axiosInstance.delete<Project>(
+          `${GET_PROJECT()}${project.id}`,
+          { data: JSON.stringify(project) }
+        );
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);

@@ -1,9 +1,11 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme/theme";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import GetLabel from "../../components/Label";
 import { Task } from "../../types/Task";
 import { getTimeLeftTo } from "../../utils/TimeDate";
+import { TASKS } from "../../navigation/CONSTANTS";
+import { Link } from "react-router-dom";
 
 const TaskCard = (props: { task: Task }) => {
   const task = props.task;
@@ -28,9 +30,9 @@ const TaskCard = (props: { task: Task }) => {
         <Box display="flex" flexDirection="column">
           {/* LABELS BOX */}
           <Box display="flex" mb="3px">
-            {GetLabel(task.type.toLowerCase())}
-            {GetLabel(task.status.toLowerCase())}
-            {GetLabel(task.priority.toLowerCase())}
+            {GetLabel(task.getType().toLowerCase())}
+            {GetLabel(task.getStatus().toLowerCase())}
+            {GetLabel(task.getPriority().toLowerCase())}
           </Box>
 
           <Typography
@@ -47,7 +49,7 @@ const TaskCard = (props: { task: Task }) => {
             color={colors.grey[1]}
             sx={{ m: "0px 0 5px 0" }}
           >
-            Assign to: <i>{task.assignee}</i>
+            Assign to: <i>{task.assignedId}</i>
           </Typography>
 
           <Typography
@@ -55,20 +57,29 @@ const TaskCard = (props: { task: Task }) => {
             color={colors.grey[1]}
             sx={{ m: "0px 0 5px 0" }}
           >
-            Project: <i>{task.project}</i>
+            Project: <i>{task.projectId}</i>
           </Typography>
         </Box>
 
         {/* TIME ICON */}
-        <Box display="flex" justifyContent="flex-end">
-          <AccessTimeIcon />
-          <Typography
-            variant="h6"
-            color={colors.grey[2]}
-            sx={{ m: "0px 0 0px 3px" }}
-          >
-            {getTimeLeftTo(task.deadline)}
-          </Typography>
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          sx={{ m: "0px 0 0px 3px" }}
+        >
+          <Link to={TASKS + "/" + task.id} state={{ stateTask: task }}>
+            <Button size="small">Edit</Button>
+          </Link>
+          <Box display="flex" justifyContent="flex-end">
+            <AccessTimeIcon />
+            <Typography
+              variant="h6"
+              color={colors.grey[2]}
+              sx={{ m: "0px 0 0px 3px" }}
+            >
+              {getTimeLeftTo(task.deadline)}
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </div>

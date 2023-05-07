@@ -44,7 +44,7 @@ const GetLabel = (label: string) => {
     // task priority
     minor: { text: "MINOR", color: colors.greenAccent[4] },
     low: { text: "LOW", color: colors.brownAccent[0] },
-    medium: { text: "MEDIUM", color: colors.pinkAccent[0] },
+    normal: { text: "NORMAL", color: colors.pinkAccent[0] },
     high: { text: "HIGH", color: colors.redAccent[4] },
   };
 

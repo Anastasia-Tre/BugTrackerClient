@@ -2,8 +2,8 @@ import { Box, Divider, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme/theme";
 import Header from "../../components/Header";
 import TaskCardShort from "../tasks/TaskCardShort";
-import { testData } from "../../types/Task";
 import TaskCard from "../tasks/TaskCard";
+import { Task } from "../../types/Task";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -34,7 +34,7 @@ const Dashboard = () => {
             marginBottom: 1,
           }}
         />
-        <TaskCard task={testData[3]} />
+        <TaskCard task={new Task()} />
       </Box>
 
       {/* NOW OR LATER? */}
@@ -49,7 +49,7 @@ const Dashboard = () => {
             marginBottom: 1,
           }}
         />
-        {testData.map((task, index) => (
+        {[new Task()].map((task, index) => (
           <TaskCardShort key={index} task={task} />
         ))}
       </Box>

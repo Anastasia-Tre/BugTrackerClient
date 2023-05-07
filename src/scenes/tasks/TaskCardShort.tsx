@@ -32,9 +32,9 @@ const TaskCardShort = (props: { task: Task }) => {
           sx={{ gridColumn: "span 6" }}
         >
           <Box display="flex">
-            {GetLabel(task.type.toLowerCase())}
-            {GetLabel(task.status.toLowerCase())}
-            {GetLabel(task.priority.toLowerCase())}
+            {GetLabel(task.getType().toLowerCase())}
+            {GetLabel(task.getStatus().toLowerCase())}
+            {GetLabel(task.getPriority().toLowerCase())}
           </Box>
         </Box>
 

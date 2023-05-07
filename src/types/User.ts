@@ -10,6 +10,7 @@ export class User {
 
   constructor(initializer?: any) {
     if (!initializer) return;
+    if (initializer.id) this.id = initializer.id;
     if (initializer.firstName) this.firstName = initializer.firstName;
     if (initializer.lastName) this.lastName = initializer.lastName;
     if (initializer.email) this.email = initializer.email;
