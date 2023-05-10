@@ -9,13 +9,14 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import Header from "../../components/Header";
-import { tokens } from "../../theme/theme";
 import TaskCard from "./TaskCard";
 import { useEffect, useState } from "react";
 import { TaskService } from "../../services/taskService";
 import { Task } from "../../types/Task";
 import { TASKS } from "../../navigation/CONSTANTS";
 import { Link } from "react-router-dom";
+import { ProjectService } from "../../services/projectService";
+import { Project } from "../../types/Project";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -23,13 +24,19 @@ const Tasks = () => {
   const [status, setStatus] = useState<string>();
   const [type, setType] = useState<string>();
   const [priority, setPriority] = useState<string>();
+  const [project, setProject] = useState<string>();
+  const [projects, setProjects] = useState<Project[]>([]);
+
   const service = new TaskService();
+  const projectService = new ProjectService();
 
   useEffect(() => {
     async function loadData() {
       try {
         const data = await service.getAllTasks();
         setTasks(data);
+        const projects = await projectService.getAllProjects();
+        setProjects(projects);
       } catch (e) {
         console.log("Error in load data for all tasks" + e);
       }
@@ -41,13 +48,21 @@ const Tasks = () => {
     name?: string,
     status?: string,
     type?: string,
-    priority?: string
+    priority?: string,
+    project?: string
   ) => {
     if (status == "ALL") status = undefined;
     if (type == "ALL") type = undefined;
     if (priority == "ALL") priority = undefined;
+    if (project == "ALL") project = undefined;
     try {
-      const data = await service.filterTasks(name, status, type, priority);
+      const data = await service.filterTasks(
+        name,
+        status,
+        type,
+        priority,
+        project
+      );
       setTasks(data);
     } catch (e) {
       console.log("Error in filter data for all projects" + e);
@@ -93,8 +108,16 @@ const Tasks = () => {
           label="Project"
           select
           name="project"
+          onChange={(val) => setProject(val.target.value)}
           sx={{ gridColumn: "span 2" }}
-        ></TextField>
+        >
+          <MenuItem value="ALL">All</MenuItem>
+          {projects.map((elem) => (
+            <MenuItem key={elem.id} value={elem.name}>
+              {elem.name}
+            </MenuItem>
+          ))}
+        </TextField>
         <TextField
           fullWidth
           size="small"
@@ -151,7 +174,7 @@ const Tasks = () => {
         <Button
           onClick={(e) => {
             console.log("filter");
-            filter(name, status, type, priority);
+            filter(name, status, type, priority, project);
           }}
           color="primary"
           variant="contained"

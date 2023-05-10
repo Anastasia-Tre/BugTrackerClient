@@ -1,12 +1,17 @@
+import { Project } from "./Project";
+import { User } from "./User";
+
 export class Task {
   public id: number | undefined;
   public name: string = "";
   public description: string = "";
-  public projectId: number = 1; // string = "";
+  public projectId: number = 1;
+  public project: Project = new Project();
   public deadline: Date = new Date();
   public status: number = 1; //string = "NEW"; // "NEW" | "PROGRESS" | "TESTING" | "CLOSED"
   public type: number = 1; // string = "TASK"; // "ISUEE" | "FEATURE" | "TASK" | "BUG"
-  public assignedId: number = 1; //string = "";
+  public assignedId: number = 1;
+  public assigned: User = new User();
   public authorId: number = 1; //string = "";
   public priority: number = 3; // string = "NORMAL"; // "MINOR" | "LOW" | "NORMAL" | "HIGH"
   public difficulty: number = 0;
@@ -17,10 +22,12 @@ export class Task {
     if (initializer.name) this.name = initializer.name;
     if (initializer.description) this.description = initializer.description;
     if (initializer.projectId) this.projectId = initializer.projectId;
+    if (initializer.project) this.project = new Project(initializer.project);
     if (initializer.deadline) this.deadline = new Date(initializer.deadline);
     if (initializer.status) this.status = initializer.status;
     if (initializer.type) this.type = initializer.type;
     if (initializer.assignedId) this.assignedId = initializer.assignedId;
+    if (initializer.assigned) this.assigned = new User(initializer.assigned);
     if (initializer.authorId) this.authorId = initializer.authorId;
     if (initializer.priority) this.priority = initializer.priority;
     if (initializer.difficulty) this.difficulty = initializer.difficulty;

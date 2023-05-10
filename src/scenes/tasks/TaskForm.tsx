@@ -15,16 +15,39 @@ import { tokens } from "../../theme/theme";
 import { useNavigate } from "react-router-dom";
 import { TaskService } from "../../services/taskService";
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { Project } from "../../types/Project";
+import { User } from "../../types/User";
+import { ProjectService } from "../../services/projectService";
+import { UserService } from "../../services/userService";
 
 const TaskForm = (props: { task: Task }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const service = new TaskService();
+  const projectService = new ProjectService();
+  const userService = new UserService();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const projects = await projectService.getAllProjects();
+        setProjects(projects);
+        const users = await userService.getAllUsers();
+        setUsers(users);
+      } catch (e) {
+        console.log("Error in load data " + e);
+      }
+    }
+    loadData();
+  }, []);
+
   const task = props.task;
   const isNonMobile = useMediaQuery("(min-width:600px)");
-
-  const service = new TaskService();
 
   const handleFormSave = async (values: Task) => {
     if (!values.id) {
@@ -92,6 +115,7 @@ const TaskForm = (props: { task: Task }) => {
                 />
                 <TextField
                   fullWidth
+                  select
                   variant="filled"
                   type="text"
                   label="Project"
@@ -102,7 +126,13 @@ const TaskForm = (props: { task: Task }) => {
                   error={!!touched.projectId && !!errors.projectId}
                   helperText={touched.projectId && errors.projectId}
                   sx={{ gridColumn: "span 4" }}
-                />
+                >
+                  {projects.map((elem) => (
+                    <MenuItem key={elem.id} value={elem.id}>
+                      {elem.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
                 <TextField
                   fullWidth
                   variant="filled"
@@ -113,6 +143,7 @@ const TaskForm = (props: { task: Task }) => {
                   onChange={handleChange}
                   value={task.status}
                   name="status"
+                  id="status"
                   error={!!touched.status && !!errors.status}
                   helperText={touched.status && errors.status}
                   sx={{ gridColumn: "span 4" }}
@@ -188,7 +219,7 @@ const TaskForm = (props: { task: Task }) => {
                   helperText={touched.difficulty && errors.difficulty}
                   sx={{ gridColumn: "span 4" }}
                 />
-                <TextField
+                {/* <TextField
                   fullWidth
                   variant="filled"
                   type="text"
@@ -203,20 +234,21 @@ const TaskForm = (props: { task: Task }) => {
                   error={!!touched.authorId && !!errors.authorId}
                   helperText={touched.authorId && errors.authorId}
                   sx={{ gridColumn: "span 4" }}
-                />
+                /> */}
               </Box>
               <Box
                 width="100%"
                 display="grid"
                 gap="20px"
                 gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-                gridTemplateRows="repeat(8, minmax(0, 1fr))"
+                gridTemplateRows="repeat(7, minmax(0, 1fr))"
                 sx={{
                   "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                 }}
               >
                 <TextField
                   fullWidth
+                  select
                   variant="filled"
                   type="text"
                   label="Assigned To"
@@ -227,7 +259,13 @@ const TaskForm = (props: { task: Task }) => {
                   error={!!touched.assignedId && !!errors.assignedId}
                   helperText={touched.assignedId && errors.assignedId}
                   sx={{ gridColumn: "span 4", gridRow: "span 1" }}
-                />
+                >
+                  {users.map((elem) => (
+                    <MenuItem key={elem.id} value={elem.id}>
+                      {elem.getFullName()}
+                    </MenuItem>
+                  ))}
+                </TextField>
                 <TextField
                   fullWidth
                   margin="dense"

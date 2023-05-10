@@ -19,6 +19,10 @@ export class User {
     if (initializer.bio) this.bio = initializer.bio;
     if (initializer.password) this.password = initializer.password;
   }
+
+  getFullName(): string {
+    return this.firstName + " " + this.lastName;
+  }
 }
 
 export const testUser: User = {
@@ -30,4 +34,7 @@ export const testUser: User = {
   title: "Software Engineer",
   bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, libero sed aliquam pellentesque, nibh nibh bibendum nulla, vel gravida elit massa sed nunc. In quis ipsum eu metus rhoncus efficitur.",
   password: "password",
+  getFullName: function (): string {
+    return this.firstName + " " + this.lastName;
+  },
 };
