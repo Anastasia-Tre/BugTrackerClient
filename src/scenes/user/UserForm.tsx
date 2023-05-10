@@ -3,30 +3,44 @@ import Header from "../../components/Header";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { User } from "../../types/User";
-import { tokens } from "../../theme/theme";
+import { UserService } from "../../services/userService";
+import { useState, useEffect } from "react";
 
 const UserForm = (props: { user: User }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
-  const project = props.user;
+  //const UserForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSave = (values: User) => {
+  const user = props.user;
+  const service = new UserService();
+  // const [user, setUser] = useState<User>(new User());
+
+  // useEffect(() => {
+  //   async function loadData() {
+  //     try {
+  //       const data = await service.getUserById(1);
+  //       setUser(data);
+  //       console.log(data);
+  //     } catch (e) {
+  //       console.log("Error in load data for user" + e);
+  //     }
+  //   }
+  //   loadData();
+  // });
+
+  const handleFormSave = async (values: User) => {
+    if (!values.id) {
+      await service.createUser(values);
+    } else await service.updateUser(values);
     console.log("Save " + values.firstName);
   };
 
-  const handleFormDelete = (values: User) => {
-    console.log("Delete " + values.firstName);
-  };
-
   return (
-    <Box>
+    <Box m="20px">
       <Header title="USER PROFILE" />
 
       <Formik
         onSubmit={handleFormSave}
-        initialValues={project}
+        initialValues={user}
         validationSchema={checkoutSchema}
       >
         {({
@@ -157,17 +171,6 @@ const UserForm = (props: { user: User }) => {
             <Box display="flex" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
                 Save
-              </Button>
-              <Button
-                onClick={(e) => handleFormDelete(values)}
-                variant="contained"
-                sx={{ ml: "10px" }}
-                style={{
-                  backgroundColor: colors.redAccent[5],
-                  color: "black",
-                }}
-              >
-                Delete
               </Button>
             </Box>
           </form>

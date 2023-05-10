@@ -1,18 +1,34 @@
-import { Box } from "@mui/material";
-import Header from "../../components/Header";
-import { testUser } from "../../types/User";
+import { Box, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { UserService } from "../../services/userService";
+import { testUser, User } from "../../types/User";
+import { USER } from "../../navigation/CONSTANTS";
 import UserForm from "./UserForm";
+import ReactDOM from "react-dom";
 
-const User = () => {
+const UserProfile = () => {
+  const [user, setUser] = useState<User>(new User());
+  const service = new UserService();
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await service.getUserById(1);
+        setUser(data);
+        console.log(data);
+      } catch (e) {
+        console.log("Error in load data for user" + e);
+      }
+    }
+    loadData();
+  }, []);
+
   return (
     <Box m="20px">
-      {/* HEADER */}
-      {/* <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="USER" subtitle="Welcome to your profile" />
-      </Box> */}
       <UserForm user={testUser}></UserForm>
     </Box>
   );
 };
 
-export default User;
+export default UserProfile;

@@ -158,6 +158,3 @@ const checkoutSchema = yup.object().shape({
 });
 
 export default ProjectForm;
-function useHistory() {
-  throw new Error("Function not implemented.");
-}

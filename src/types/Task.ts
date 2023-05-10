@@ -16,12 +16,12 @@ export class Task {
     if (initializer.id) this.id = initializer.id;
     if (initializer.name) this.name = initializer.name;
     if (initializer.description) this.description = initializer.description;
-    if (initializer.project) this.projectId = initializer.projectId;
+    if (initializer.projectId) this.projectId = initializer.projectId;
     if (initializer.deadline) this.deadline = new Date(initializer.deadline);
     if (initializer.status) this.status = initializer.status;
     if (initializer.type) this.type = initializer.type;
-    if (initializer.assignee) this.assignedId = initializer.assignedId;
-    if (initializer.author) this.authorId = initializer.authorId;
+    if (initializer.assignedId) this.assignedId = initializer.assignedId;
+    if (initializer.authorId) this.authorId = initializer.authorId;
     if (initializer.priority) this.priority = initializer.priority;
     if (initializer.difficulty) this.difficulty = initializer.difficulty;
   }
