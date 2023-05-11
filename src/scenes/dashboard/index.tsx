@@ -98,7 +98,7 @@ const Dashboard = () => {
             sx={{ gridRow: "span 2" }}
           >
             <Pie complete={23} incomplete={17} total={40} />
-            {/* <Line /> */}
+            <Line />
           </Box>
         </Box>
       </Box>

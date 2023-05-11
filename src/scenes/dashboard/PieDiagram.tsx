@@ -30,7 +30,7 @@ const Pie = (props: {
       y="48%"
       textAnchor="middle"
       dominantBaseline="middle"
-      style={{ fontSize: "3rem", fill: colors.grey[100] }}
+      style={{ fontSize: "3rem", color: colors.grey[100] }}
     >
       {props.total}
     </text>
@@ -68,7 +68,7 @@ const Pie = (props: {
             },
           },
         }}
-        margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+        margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
         innerRadius={0.65}
         padAngle={1}
         cornerRadius={6}

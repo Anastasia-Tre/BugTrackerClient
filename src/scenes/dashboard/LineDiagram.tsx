@@ -1,60 +1,47 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 
 import { ResponsiveLine } from "@nivo/line";
+import { tokens } from "../../theme/theme";
 
 const Line = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const data = [
     {
       id: "japan",
-      color: "hsl(130, 70%, 50%)",
       data: [
         {
-          x: "plane",
-          y: 78,
+          x: "2018-01-01",
+          y: 7,
         },
         {
-          x: "helicopter",
-          y: 186,
+          x: "2018-01-02",
+          y: 5,
         },
         {
-          x: "boat",
-          y: 256,
+          x: "2018-01-03",
+          y: 11,
         },
         {
-          x: "train",
-          y: 241,
+          x: "2018-01-04",
+          y: 9,
         },
         {
-          x: "subway",
-          y: 50,
+          x: "2018-01-05",
+          y: 12,
         },
         {
-          x: "bus",
-          y: 288,
+          x: "2018-01-06",
+          y: 16,
         },
         {
-          x: "car",
-          y: 69,
+          x: "2018-01-07",
+          y: 13,
         },
         {
-          x: "moto",
-          y: 70,
-        },
-        {
-          x: "bicycle",
-          y: 187,
-        },
-        {
-          x: "horse",
-          y: 165,
-        },
-        {
-          x: "skateboard",
-          y: 32,
-        },
-        {
-          x: "others",
-          y: 232,
+          x: "2018-01-08",
+          y: 13,
         },
       ],
     },
@@ -64,31 +51,58 @@ const Line = () => {
     <Box height="250px">
       <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: "point" }}
+        theme={{
+          axis: {
+            domain: {
+              line: {
+                stroke: colors.grey[100],
+              },
+            },
+            legend: {
+              text: {
+                fill: colors.grey[100],
+              },
+            },
+            ticks: {
+              line: {
+                stroke: colors.grey[100],
+                strokeWidth: 1,
+              },
+              text: {
+                fill: colors.grey[100],
+              },
+            },
+          },
+          legends: {
+            text: {
+              fill: colors.grey[100],
+            },
+          },
+        }}
+        margin={{ top: 25, right: 25, bottom: 25, left: 25 }}
+        xFormat="time:%m-%d"
+        xScale={{
+          format: "%Y-%m-%d",
+          precision: "day",
+          type: "time",
+          useUTC: false,
+        }}
         yScale={{
           type: "linear",
-          min: "auto",
-          max: "auto",
-          stacked: true,
-          reverse: false,
+          min: 0,
         }}
-        yFormat=" >-.2f"
-        // axisTop={null}
-        // axisRight={null}
+        curve="monotoneX"
         axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "transportation",
-          legendOffset: 36,
+          format: "%b %d",
+          legendOffset: -12,
           legendPosition: "middle",
+          tickValues: "every 2 days",
         }}
         axisLeft={{
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "count",
+          legend: "tasks",
           legendOffset: -40,
           legendPosition: "middle",
         }}
