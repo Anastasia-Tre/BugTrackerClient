@@ -7,10 +7,30 @@ import { Task } from "../../types/Task";
 import InfoBox from "../../components/InfoBox";
 import Pie from "./PieDiagram";
 import Line from "./LineDiagram";
+import { useEffect, useState } from "react";
+import { TaskService } from "../../services/taskService";
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [taskInFocus, setTaskInFocus] = useState<Task>(new Task());
+  const [tasksForNowOrLater, settasksForNowOrLater] = useState<Task[]>([]);
+  const service = new TaskService();
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await service.getTaskInFocus(1);
+        setTaskInFocus(data);
+        const data1 = await service.getAllTasksForNowOrLater(1);
+        settasksForNowOrLater(data1);
+      } catch (e) {
+        console.log("Error in load data for all tasks" + e);
+      }
+    }
+    loadData();
+  }, []);
 
   return (
     <Box m="20px">
@@ -48,7 +68,7 @@ const Dashboard = () => {
                 marginBottom: 1,
               }}
             />
-            <TaskCard task={new Task()} />
+            <TaskCard task={taskInFocus} />
           </Box>
 
           {/* NOW OR LATER? */}
@@ -68,7 +88,7 @@ const Dashboard = () => {
                 marginBottom: 1,
               }}
             />
-            {[new Task()].map((task, index) => (
+            {tasksForNowOrLater.map((task, index) => (
               <TaskCardShort key={index} task={task} />
             ))}
           </Box>

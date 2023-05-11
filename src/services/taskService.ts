@@ -1,6 +1,13 @@
 import axios from "axios";
 import { Task } from "../types/Task";
-import { GET_ALL_TASKS, CREATE_TASK, GET_TASK } from "./CONSTANTS";
+import {
+  GET_ALL_TASKS,
+  CREATE_TASK,
+  GET_TASK,
+  GET_TASKS_FOR_PROJECT,
+  GET_TASK_IN_FOCUS,
+  GET_TASKS_FOR_NOW_OR_LATER,
+} from "./CONSTANTS";
 
 export class TaskService {
   private axiosInstance = axios.create({
@@ -123,6 +130,44 @@ export class TaskService {
       } else {
         console.log("unexpected error: ", error);
       }
+    }
+  }
+
+  public async getAllTasksForProject(projectId: number): Promise<Task[]> {
+    try {
+      const { data } = await this.axiosInstance.get<Task[]>(
+        GET_TASKS_FOR_PROJECT(),
+        { params: { projectId } }
+      );
+      return this.convertToTaskModels(data);
+    } catch (error) {
+      console.log("Failed to get tasks:", error);
+      throw new Error("Failed to get tasks");
+    }
+  }
+
+  public async getTaskInFocus(userId: number): Promise<Task> {
+    try {
+      const { data } = await this.axiosInstance.get<Task>(GET_TASK_IN_FOCUS(), {
+        params: { userId },
+      });
+      return this.convertToTaskModel(data);
+    } catch (error) {
+      console.log("Failed to get tasks:", error);
+      throw new Error("Failed to get tasks");
+    }
+  }
+
+  public async getAllTasksForNowOrLater(userId: number): Promise<Task[]> {
+    try {
+      const { data } = await this.axiosInstance.get<Task[]>(
+        GET_TASKS_FOR_NOW_OR_LATER(),
+        { params: { userId } }
+      );
+      return this.convertToTaskModels(data);
+    } catch (error) {
+      console.log("Failed to get tasks:", error);
+      throw new Error("Failed to get tasks");
     }
   }
 }
