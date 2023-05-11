@@ -38,7 +38,7 @@ const Item = (props: {
   );
 };
 
-const Sidebar = () => {
+const AppSidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -187,4 +187,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default AppSidebar;

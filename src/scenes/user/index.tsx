@@ -1,11 +1,8 @@
 import { Box, Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { UserService } from "../../services/userService";
 import { testUser, User } from "../../types/User";
-import { USER } from "../../navigation/CONSTANTS";
 import UserForm from "./UserForm";
-import ReactDOM from "react-dom";
 
 const UserProfile = () => {
   const [user, setUser] = useState<User>(new User());

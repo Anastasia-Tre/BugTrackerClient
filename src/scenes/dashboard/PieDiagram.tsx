@@ -1,5 +1,5 @@
 import { useTheme } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
 import { ResponsivePie } from "@nivo/pie";
 import { tokens } from "../../theme/theme";
 

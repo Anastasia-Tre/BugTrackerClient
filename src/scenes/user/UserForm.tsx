@@ -193,7 +193,7 @@ const checkoutSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .required("Confirm Password is required")
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
+    .oneOf([yup.ref("password"), ""], "Passwords must match"),
 });
 
 export default UserForm;

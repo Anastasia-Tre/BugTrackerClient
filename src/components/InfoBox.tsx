@@ -1,5 +1,5 @@
 import { Typography, useTheme } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
 import { tokens } from "../theme/theme";
 
 const InfoBox = () => {
