@@ -113,7 +113,7 @@ const Dashboard = () => {
           </Box>
           <Box
             display="grid"
-            gap="7px"
+            gap="15px"
             gridTemplateColumns="repeat(2, minmax(0, 1fr))"
             sx={{ gridRow: "span 2" }}
           >

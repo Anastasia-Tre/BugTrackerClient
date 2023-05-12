@@ -8,12 +8,21 @@ import Dashboard from "./scenes/dashboard";
 import Projects from "./scenes/projects";
 import Tasks from "./scenes/tasks";
 import UserProfile from "./scenes/user";
-import { PROJECTS, ROOT, TASKS, USER } from "./navigation/CONSTANTS";
+import {
+  CALENDAR,
+  FAQ,
+  PROJECTS,
+  ROOT,
+  TASKS,
+  USER,
+} from "./navigation/CONSTANTS";
 import EditProjectPage from "./scenes/projects/EditProjectForm";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import EditTaskPage from "./scenes/tasks/EditTaskForm";
 import EditUserPage from "./scenes/user/EditUserForm";
 import UserForm from "./scenes/user/UserForm";
+import Calendar from "./scenes/calendar";
+import Faq from "./scenes/faq";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -33,6 +42,8 @@ function App() {
                 <Route path={TASKS + "/:id"} Component={EditTaskPage} />
                 <Route path={TASKS} element={<Tasks />} />
                 <Route path={USER} element={<UserProfile />} />
+                <Route path={CALENDAR} element={<Calendar />} />
+                <Route path={FAQ} element={<Faq />} />
                 {/* <Route path={USER} Component={EditUserPage} /> */}
               </Routes>
             </main>

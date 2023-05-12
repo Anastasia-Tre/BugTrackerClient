@@ -26,8 +26,8 @@ const Pie = (props: {
 
   const CenterText = () => (
     <text
-      x="47%"
-      y="48%"
+      x="49%"
+      y="49%"
       textAnchor="middle"
       dominantBaseline="middle"
       style={{ fontSize: "3rem", color: colors.grey[100] }}

@@ -122,7 +122,7 @@ const TaskForm = (props: { task: Task }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.projectId}
-                  name="project"
+                  name="projectId"
                   error={!!touched.projectId && !!errors.projectId}
                   helperText={touched.projectId && errors.projectId}
                   sx={{ gridColumn: "span 4" }}
@@ -141,7 +141,7 @@ const TaskForm = (props: { task: Task }) => {
                   select
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={task.status}
+                  value={values.status}
                   name="status"
                   id="status"
                   error={!!touched.status && !!errors.status}
@@ -161,7 +161,7 @@ const TaskForm = (props: { task: Task }) => {
                   select
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={task.type}
+                  value={values.type}
                   name="type"
                   error={!!touched.type && !!errors.type}
                   helperText={touched.type && errors.type}
@@ -181,7 +181,7 @@ const TaskForm = (props: { task: Task }) => {
                   select
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={task.priority}
+                  value={values.priority}
                   name="priority"
                   error={!!touched.priority && !!errors.priority}
                   helperText={touched.priority && errors.priority}
@@ -255,7 +255,7 @@ const TaskForm = (props: { task: Task }) => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.assignedId}
-                  name="assignee"
+                  name="assignedId"
                   error={!!touched.assignedId && !!errors.assignedId}
                   helperText={touched.assignedId && errors.assignedId}
                   sx={{ gridColumn: "span 4", gridRow: "span 1" }}
