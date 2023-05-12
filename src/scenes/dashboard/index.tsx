@@ -10,6 +10,7 @@ import Line from "./LineDiagram";
 import Bar from "./BarDiagram";
 import { useEffect, useState } from "react";
 import { TaskService } from "../../services/taskService";
+import { Serie } from "@nivo/line";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -18,6 +19,10 @@ const Dashboard = () => {
   const [taskInFocus, setTaskInFocus] = useState<Task>(new Task());
   const [tasksForNowOrLater, settasksForNowOrLater] = useState<Task[]>([]);
   const [infostat, setInfoStat] = useState<number[]>([]);
+  const [dataForLineDiagram, setDataForLineDiagram] = useState<Serie[]>([]);
+  const [dataForBarDiagram, setDataForBarDiagram] = useState<
+    { project: string; complete: number; uncomplete: number }[]
+  >([]);
   const service = new TaskService();
 
   const userId = 1;
@@ -36,6 +41,12 @@ const Dashboard = () => {
           await service.getTaskOverdue(userId),
         ];
         setInfoStat(info);
+
+        const tasks = await service.getAllTasksForUser(userId);
+        const dataForLine = service.prepareDataForLineDigram(tasks);
+        setDataForLineDiagram(dataForLine);
+        const dataForBar = service.prepareDataForBarDiagram(tasks);
+        setDataForBarDiagram(dataForBar);
       } catch (e) {
         console.log("Error in load data for all tasks" + e);
       }
@@ -134,11 +145,11 @@ const Dashboard = () => {
               uncomplete={infostat[2]}
               total={infostat[0]}
             />
-            <Line />
+            <Line data={dataForLineDiagram} />
           </Box>
 
           <Box sx={{ gridRow: "span 2" }}>
-            <Bar />
+            <Bar data={dataForBarDiagram} />
           </Box>
         </Box>
       </Box>

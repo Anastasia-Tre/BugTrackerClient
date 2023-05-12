@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Serie } from "@nivo/line";
 import { Task } from "../types/Task";
 import {
   GET_ALL_TASKS,
@@ -11,6 +12,7 @@ import {
   GET_TASK_COMPLETE,
   GET_TASK_UNCOMPLETE,
   GET_TASK_OVERDUE,
+  GET_TASKS_FOR_USER,
 } from "./CONSTANTS";
 
 export class TaskService {
@@ -150,6 +152,19 @@ export class TaskService {
     }
   }
 
+  public async getAllTasksForUser(userId: number): Promise<Task[]> {
+    try {
+      const { data } = await this.axiosInstance.get<Task[]>(
+        GET_TASKS_FOR_USER(),
+        { params: { userId } }
+      );
+      return this.convertToTaskModels(data);
+    } catch (error) {
+      console.log("Failed getAllTasksForUser to get tasks:", error);
+      throw new Error("Failed getAllTasksForUser to get tasks");
+    }
+  }
+
   public async getTaskInFocus(userId: number): Promise<Task> {
     try {
       const { data } = await this.axiosInstance.get<Task>(GET_TASK_IN_FOCUS(), {
@@ -230,5 +245,65 @@ export class TaskService {
       console.log("Failed getTaskOverdue to get tasks:", error);
       throw new Error("Failed getTaskOverdue to get tasks");
     }
+  }
+
+  public prepareDataForLineDigram(tasks: Task[]): Serie[] {
+    const countsByMonth = tasks.reduce((counts, task) => {
+      const month = task.deadline.getMonth() + 1;
+      const year = task.deadline.getFullYear();
+      const key = `${year}-${month}-01`;
+
+      counts[key] = (counts[key] || 0) + 1;
+      return counts;
+    }, {} as Record<string, number>);
+
+    const data: { x: string; y: number }[] = Object.entries(countsByMonth).map(
+      ([key, count]) => ({
+        x: key,
+        y: count,
+      })
+    );
+
+    data.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
+
+    const result: Serie = {
+      id: "tasks",
+      data,
+    };
+
+    return [result];
+  }
+
+  public prepareDataForBarDiagram(
+    tasks: Task[]
+  ): { project: string; complete: number; uncomplete: number }[] {
+    const countsByProject: Record<
+      string,
+      { complete: number; uncomplete: number }
+    > = {};
+
+    tasks.forEach((task) => {
+      const key = task.project.name;
+      const isComplete = task.status > 2;
+
+      if (!countsByProject[key]) {
+        countsByProject[key] = { complete: 0, uncomplete: 0 };
+      }
+
+      if (isComplete) {
+        countsByProject[key].complete += 1;
+      } else {
+        countsByProject[key].uncomplete += 1;
+      }
+    });
+
+    const data: { project: string; complete: number; uncomplete: number }[] =
+      Object.entries(countsByProject).map(([key, count]) => ({
+        project: key,
+        complete: count.complete,
+        uncomplete: count.uncomplete,
+      }));
+
+    return data;
   }
 }

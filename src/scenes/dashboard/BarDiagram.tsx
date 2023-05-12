@@ -1,45 +1,10 @@
 import { Box } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 
-const Bar = () => {
-  const data = [
-    {
-      project: "AD",
-      complete: 51,
-      uncomplete: 161,
-    },
-    {
-      project: "AE",
-      complete: 104,
-      uncomplete: 8,
-    },
-    {
-      project: "AF",
-      complete: 167,
-      uncomplete: 65,
-    },
-    {
-      project: "AG",
-      complete: 177,
-      uncomplete: 151,
-    },
-    {
-      project: "AI",
-      complete: 127,
-      uncomplete: 46,
-    },
-    {
-      project: "AL",
-      complete: 116,
-      uncomplete: 18,
-    },
-    {
-      project: "AM",
-      complete: 145,
-      uncomplete: 194,
-    },
-  ];
-
+const Bar = (props: {
+  data: { project: string; complete: number; uncomplete: number }[];
+}) => {
+  const data = props.data;
   return (
     <Box height="250px">
       <ResponsiveBar
@@ -57,8 +22,7 @@ const Bar = () => {
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: 0,
-          legend: "project",
+          tickRotation: 15,
           legendPosition: "middle",
           legendOffset: 32,
         }}
