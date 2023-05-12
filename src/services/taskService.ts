@@ -7,6 +7,10 @@ import {
   GET_TASKS_FOR_PROJECT,
   GET_TASK_IN_FOCUS,
   GET_TASKS_FOR_NOW_OR_LATER,
+  GET_TASK_TOTAL,
+  GET_TASK_COMPLETE,
+  GET_TASK_UNCOMPLETE,
+  GET_TASK_OVERDUE,
 } from "./CONSTANTS";
 
 export class TaskService {
@@ -30,8 +34,8 @@ export class TaskService {
       const { data } = await this.axiosInstance.get<Task>(`${GET_TASK()}${id}`);
       return this.convertToTaskModel(data);
     } catch (error) {
-      console.log("Failed to get Task:", error);
-      throw new Error("Failed to get Task");
+      console.log("Failed getTaskById to get Task:", error);
+      throw new Error("Failed getTaskById to get Task");
     }
   }
 
@@ -40,8 +44,8 @@ export class TaskService {
       const { data } = await this.axiosInstance.get<Task[]>(GET_ALL_TASKS());
       return this.convertToTaskModels(data);
     } catch (error) {
-      console.log("Failed to get tasks:", error);
-      throw new Error("Failed to get tasks");
+      console.log("Failed getAllTasks to get tasks:", error);
+      throw new Error("Failed getAllTasks to get tasks");
     }
   }
 
@@ -95,9 +99,9 @@ export class TaskService {
         );
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
+        console.log("error message filterTasks: ", error.message);
       } else {
-        console.log("unexpected error: ", error);
+        console.log("unexpected error filterTasks: ", error);
       }
     }
   }
@@ -111,9 +115,9 @@ export class TaskService {
         );
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
+        console.log("error message updateTask: ", error.message);
       } else {
-        console.log("unexpected error: ", error);
+        console.log("unexpected error updateTask: ", error);
       }
     }
   }
@@ -126,9 +130,9 @@ export class TaskService {
         });
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
+        console.log("error message deleteTask: ", error.message);
       } else {
-        console.log("unexpected error: ", error);
+        console.log("unexpected error deleteTask: ", error);
       }
     }
   }
@@ -141,8 +145,8 @@ export class TaskService {
       );
       return this.convertToTaskModels(data);
     } catch (error) {
-      console.log("Failed to get tasks:", error);
-      throw new Error("Failed to get tasks");
+      console.log("Failed getAllTasksForProject to get tasks:", error);
+      throw new Error("Failed getAllTasksForProject to get tasks");
     }
   }
 
@@ -153,8 +157,8 @@ export class TaskService {
       });
       return this.convertToTaskModel(data);
     } catch (error) {
-      console.log("Failed to get tasks:", error);
-      throw new Error("Failed to get tasks");
+      console.log("Failed getTaskInFocus to get tasks:", error);
+      throw new Error("Failed getTaskInFocus to get tasks");
     }
   }
 
@@ -166,8 +170,65 @@ export class TaskService {
       );
       return this.convertToTaskModels(data);
     } catch (error) {
-      console.log("Failed to get tasks:", error);
-      throw new Error("Failed to get tasks");
+      console.log("Failed getAllTasksForNowOrLater to get tasks:", error);
+      throw new Error("Failed getAllTasksForNowOrLater to get tasks");
+    }
+  }
+
+  public async getTaskTotal(userId: number): Promise<number> {
+    try {
+      const { data } = await this.axiosInstance.get<number>(GET_TASK_TOTAL(), {
+        params: { userId },
+      });
+      return data;
+    } catch (error) {
+      console.log("Failed getTaskTotal to get tasks:", error);
+      throw new Error("Failed getTaskTotal to get tasks");
+    }
+  }
+
+  public async getTaskComplete(userId: number): Promise<number> {
+    try {
+      const { data } = await this.axiosInstance.get<number>(
+        GET_TASK_COMPLETE(),
+        {
+          params: { userId },
+        }
+      );
+      return data;
+    } catch (error) {
+      console.log("Failed getTaskComplete to get tasks:", error);
+      throw new Error("Failed getTaskComplete to get tasks");
+    }
+  }
+
+  public async getTaskUncomplete(userId: number): Promise<number> {
+    try {
+      const { data } = await this.axiosInstance.get<number>(
+        GET_TASK_UNCOMPLETE(),
+        {
+          params: { userId },
+        }
+      );
+      return data;
+    } catch (error) {
+      console.log("Failed getTaskUncomplete to get tasks:", error);
+      throw new Error("Failed getTaskUncomplete to get tasks");
+    }
+  }
+
+  public async getTaskOverdue(userId: number): Promise<number> {
+    try {
+      const { data } = await this.axiosInstance.get<number>(
+        GET_TASK_OVERDUE(),
+        {
+          params: { userId },
+        }
+      );
+      return data;
+    } catch (error) {
+      console.log("Failed getTaskOverdue to get tasks:", error);
+      throw new Error("Failed getTaskOverdue to get tasks");
     }
   }
 }

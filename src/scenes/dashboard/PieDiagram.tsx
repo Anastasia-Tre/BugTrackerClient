@@ -5,7 +5,7 @@ import { tokens } from "../../theme/theme";
 
 const Pie = (props: {
   complete: number;
-  incomplete: number;
+  uncomplete: number;
   total: number;
 }) => {
   const theme = useTheme();
@@ -18,9 +18,9 @@ const Pie = (props: {
       value: props.complete,
     },
     {
-      id: "incomplete",
-      label: "incomplete",
-      value: props.incomplete,
+      id: "uncomplete",
+      label: "uncomplete",
+      value: props.uncomplete,
     },
   ];
 

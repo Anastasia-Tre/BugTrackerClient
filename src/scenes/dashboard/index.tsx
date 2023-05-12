@@ -7,9 +7,9 @@ import { Task } from "../../types/Task";
 import InfoBox from "../../components/InfoBox";
 import Pie from "./PieDiagram";
 import Line from "./LineDiagram";
+import Bar from "./BarDiagram";
 import { useEffect, useState } from "react";
 import { TaskService } from "../../services/taskService";
-import Bar from "./BarDiagram";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -17,15 +17,25 @@ const Dashboard = () => {
 
   const [taskInFocus, setTaskInFocus] = useState<Task>(new Task());
   const [tasksForNowOrLater, settasksForNowOrLater] = useState<Task[]>([]);
+  const [infostat, setInfoStat] = useState<number[]>([]);
   const service = new TaskService();
 
+  const userId = 1;
   useEffect(() => {
     async function loadData() {
       try {
-        const data = await service.getTaskInFocus(1);
+        const data = await service.getTaskInFocus(userId);
         setTaskInFocus(data);
-        const data1 = await service.getAllTasksForNowOrLater(1);
+        const data1 = await service.getAllTasksForNowOrLater(userId);
         settasksForNowOrLater(data1);
+
+        const info = [
+          await service.getTaskTotal(userId),
+          await service.getTaskComplete(userId),
+          await service.getTaskUncomplete(userId),
+          await service.getTaskOverdue(userId),
+        ];
+        setInfoStat(info);
       } catch (e) {
         console.log("Error in load data for all tasks" + e);
       }
@@ -108,10 +118,10 @@ const Dashboard = () => {
             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{ gridRow: "span 1" }}
           >
-            <InfoBox />
-            <InfoBox />
-            <InfoBox />
-            <InfoBox />
+            <InfoBox label="Total bugs" num={infostat[0]} />
+            <InfoBox label="Complete bugs" num={infostat[1]} />
+            <InfoBox label="Uncomplete bugs" num={infostat[2]} />
+            <InfoBox label="Overdue bugs" num={infostat[3]} />
           </Box>
           <Box
             display="grid"
@@ -119,7 +129,11 @@ const Dashboard = () => {
             gridTemplateColumns="repeat(2, minmax(0, 1fr))"
             sx={{ gridRow: "span 2" }}
           >
-            <Pie complete={23} incomplete={17} total={40} />
+            <Pie
+              complete={infostat[1]}
+              uncomplete={infostat[2]}
+              total={infostat[0]}
+            />
             <Line />
           </Box>
 

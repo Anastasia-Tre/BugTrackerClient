@@ -2,7 +2,7 @@ import { Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/material";
 import { tokens } from "../theme/theme";
 
-const InfoBox = () => {
+const InfoBox = (props: { label: string; num: number }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -20,7 +20,7 @@ const InfoBox = () => {
       }}
     >
       <Typography variant="h5" color={colors.grey[1]} sx={{ m: "0px 0 5px 0" }}>
-        Total bugs
+        {props.label}
       </Typography>
       <Typography
         variant="h2"
@@ -28,7 +28,7 @@ const InfoBox = () => {
         fontWeight="bold"
         sx={{ m: "0px 0 5px 0" }}
       >
-        123
+        {props.num}
       </Typography>
     </Box>
   );
