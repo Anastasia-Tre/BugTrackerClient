@@ -107,7 +107,7 @@ const Line = () => {
           legendPosition: "middle",
         }}
         enableGridY={false}
-        colors={{ scheme: "pastel2" }}
+        // colors={{ scheme: "pastel2" }}
         enablePoints={false}
         pointSize={10}
         pointColor={{ theme: "background" }}

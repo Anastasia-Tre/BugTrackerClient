@@ -9,6 +9,7 @@ import Pie from "./PieDiagram";
 import Line from "./LineDiagram";
 import { useEffect, useState } from "react";
 import { TaskService } from "../../services/taskService";
+import Bar from "./BarDiagram";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -47,8 +48,8 @@ const Dashboard = () => {
       >
         <Box
           display="grid"
-          gap="20px"
-          gridTemplateRows="repeat(5, minmax(0, 1fr))"
+          gap="7px"
+          // gridTemplateRows="repeat(5, minmax(0, 1fr))"
           sx={{ gridColumn: "span 1" }}
         >
           {/* TASK IN FOCUS */}
@@ -56,7 +57,8 @@ const Dashboard = () => {
             display="flex"
             flexDirection="column"
             flexWrap="wrap"
-            sx={{ m: "0 0 5px 0", gridRow: "span 2" }}
+            sx={{ m: "0 0 5px 0" }}
+            // sx={{ m: "0 0 5px 0", gridRow: "span 2" }}
           >
             <Typography fontSize="20px" color={colors.grey[4]} align="center">
               TASK IN FOCUS
@@ -76,7 +78,7 @@ const Dashboard = () => {
             display="flex"
             flexDirection="column"
             flexWrap="wrap"
-            sx={{ gridRow: "span 3" }}
+            // sx={{ gridRow: "span 3" }}
           >
             <Typography fontSize="20px" color={colors.grey[4]} align="center">
               NOW OR LATER?
@@ -119,6 +121,10 @@ const Dashboard = () => {
           >
             <Pie complete={23} incomplete={17} total={40} />
             <Line />
+          </Box>
+
+          <Box sx={{ gridRow: "span 2" }}>
+            <Bar />
           </Box>
         </Box>
       </Box>
