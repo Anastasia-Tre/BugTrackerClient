@@ -9,14 +9,6 @@ export class Project {
   public bugs: number[] | undefined;
   public team: number[] | undefined;
 
-  getTotalTasks() {
-    return 50;
-  }
-
-  getDoneTasks() {
-    return 25;
-  }
-
   constructor(initializer?: any) {
     if (!initializer) return;
     if (initializer.id) this.id = initializer.id;

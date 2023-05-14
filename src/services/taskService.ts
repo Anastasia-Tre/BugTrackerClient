@@ -56,7 +56,8 @@ export class TaskService {
     status?: string,
     type?: string,
     priority?: string,
-    project?: string
+    project?: string,
+    assigned?: string
   ): Promise<Task[]> {
     const tasks = await this.getAllTasks();
     let filteredTasks = [...tasks];
@@ -86,6 +87,12 @@ export class TaskService {
     if (project) {
       filteredTasks = filteredTasks.filter(
         (task) => task.project?.name === project
+      );
+    }
+
+    if (assigned) {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.assigned?.getFullName() === assigned
       );
     }
 

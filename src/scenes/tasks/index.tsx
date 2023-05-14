@@ -17,6 +17,8 @@ import { TASKS } from "../../navigation/CONSTANTS";
 import { Link } from "react-router-dom";
 import { ProjectService } from "../../services/projectService";
 import { Project } from "../../types/Project";
+import { User } from "../../types/User";
+import { UserService } from "../../services/userService";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -25,10 +27,14 @@ const Tasks = () => {
   const [type, setType] = useState<string>();
   const [priority, setPriority] = useState<string>();
   const [project, setProject] = useState<string>();
+  const [assigned, setAssigned] = useState<string>();
+
   const [projects, setProjects] = useState<Project[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   const service = new TaskService();
   const projectService = new ProjectService();
+  const userService = new UserService();
 
   useEffect(() => {
     async function loadData() {
@@ -37,6 +43,8 @@ const Tasks = () => {
         setTasks(data);
         const projects = await projectService.getAllProjects();
         setProjects(projects);
+        const users = await userService.getAllUsers();
+        setUsers(users);
       } catch (e) {
         console.log("Error in load data for all tasks" + e);
       }
@@ -49,19 +57,22 @@ const Tasks = () => {
     status?: string,
     type?: string,
     priority?: string,
-    project?: string
+    project?: string,
+    assigned?: string
   ) => {
     if (status == "ALL") status = undefined;
     if (type == "ALL") type = undefined;
     if (priority == "ALL") priority = undefined;
     if (project == "ALL") project = undefined;
+    if (assigned == "ALL") assigned = undefined;
     try {
       const data = await service.filterTasks(
         name,
         status,
         type,
         priority,
-        project
+        project,
+        assigned
       );
       setTasks(data);
     } catch (e) {
@@ -123,6 +134,24 @@ const Tasks = () => {
           size="small"
           variant="filled"
           type="text"
+          label="Assigned"
+          select
+          name="assigned"
+          onChange={(val) => setAssigned(val.target.value)}
+          sx={{ gridColumn: "span 2" }}
+        >
+          <MenuItem value="ALL">All</MenuItem>
+          {users.map((elem) => (
+            <MenuItem key={elem.id} value={elem.getFullName()}>
+              {elem.getFullName()}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          fullWidth
+          size="small"
+          variant="filled"
+          type="text"
           label="Status"
           select
           name="status"
@@ -135,7 +164,7 @@ const Tasks = () => {
           <MenuItem value="CLOSED">Closed</MenuItem>
           <MenuItem value="ALL">All</MenuItem>
         </TextField>
-        <TextField
+        {/* <TextField
           fullWidth
           size="small"
           variant="filled"
@@ -151,7 +180,7 @@ const Tasks = () => {
           <MenuItem value="ISSUE">Issue</MenuItem>
           <MenuItem value="FEATURE">Feature</MenuItem>
           <MenuItem value="ALL">All</MenuItem>
-        </TextField>
+        </TextField> */}
 
         <TextField
           fullWidth
@@ -174,7 +203,7 @@ const Tasks = () => {
         <Button
           onClick={(e) => {
             console.log("filter");
-            filter(name, status, type, priority, project);
+            filter(name, status, type, priority, project, assigned);
           }}
           color="primary"
           variant="contained"
