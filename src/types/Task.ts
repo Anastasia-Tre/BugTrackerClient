@@ -6,12 +6,12 @@ export class Task {
   public name: string = "";
   public description: string = "";
   public projectId: number = 1;
-  public project: Project = new Project();
+  public project: Project | null = new Project();
   public deadline: Date = new Date();
   public status: number = 1; //string = "NEW"; // "NEW" | "PROGRESS" | "TESTING" | "CLOSED"
   public type: number = 1; // string = "TASK"; // "ISUEE" | "FEATURE" | "TASK" | "BUG"
   public assignedId: number = 1;
-  public assigned: User = new User();
+  public assigned: User | null = new User();
   public authorId: number = 1; //string = "";
   public priority: number = 3; // string = "NORMAL"; // "MINOR" | "LOW" | "NORMAL" | "HIGH"
   public difficulty: number = 0;

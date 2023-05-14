@@ -85,7 +85,7 @@ export class TaskService {
 
     if (project) {
       filteredTasks = filteredTasks.filter(
-        (task) => task.project.name === project
+        (task) => task.project?.name === project
       );
     }
 
@@ -283,7 +283,7 @@ export class TaskService {
     > = {};
 
     tasks.forEach((task) => {
-      const key = task.project.name;
+      const key = task.project?.name || "";
       const isComplete = task.status > 2;
 
       if (!countsByProject[key]) {

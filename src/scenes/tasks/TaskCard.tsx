@@ -49,7 +49,7 @@ const TaskCard = (props: { task: Task }) => {
             color={colors.grey[1]}
             sx={{ m: "0px 0 5px 0" }}
           >
-            Assign to: <i>{task.assigned.getFullName()}</i>
+            Assign to: <i>{task.assigned?.getFullName()}</i>
           </Typography>
 
           <Typography
@@ -57,7 +57,7 @@ const TaskCard = (props: { task: Task }) => {
             color={colors.grey[1]}
             sx={{ m: "0px 0 5px 0" }}
           >
-            Project: <i>{task.project.name}</i>
+            Project: <i>{task.project?.name}</i>
           </Typography>
         </Box>
 

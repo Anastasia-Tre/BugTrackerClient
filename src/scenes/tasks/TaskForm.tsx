@@ -50,11 +50,15 @@ const TaskForm = (props: { task: Task }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSave = async (values: Task) => {
-    values.project = projects[values.projectId - 1];
-    values.assigned = users[values.assignedId - 1];
     if (!values.id) {
+      values.project = null;
+      values.assigned = null;
       await service.createTask(values);
-    } else await service.updateTask(values);
+    } else {
+      values.project = projects[values.projectId - 1];
+      values.assigned = users[values.assignedId - 1];
+      await service.updateTask(values);
+    }
     console.log("Save " + values.name);
     navigate(-1);
   };
