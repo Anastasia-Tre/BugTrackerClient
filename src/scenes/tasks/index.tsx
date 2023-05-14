@@ -19,8 +19,12 @@ import { ProjectService } from "../../services/projectService";
 import { Project } from "../../types/Project";
 import { User } from "../../types/User";
 import { UserService } from "../../services/userService";
+import { tokens } from "../../theme/theme";
 
 const Tasks = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [name, setName] = useState<string>();
   const [status, setStatus] = useState<string>();
@@ -205,9 +209,12 @@ const Tasks = () => {
             console.log("filter");
             filter(name, status, type, priority, project, assigned);
           }}
-          color="primary"
           variant="contained"
-          sx={{ gridColumn: "span 1" }}
+          sx={{
+            gridColumn: "span 1",
+            color: "black",
+            backgroundColor: colors.blueAccent[5],
+          }}
         >
           FILTER
         </Button>

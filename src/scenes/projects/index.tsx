@@ -4,6 +4,7 @@ import {
   InputAdornment,
   MenuItem,
   TextField,
+  useTheme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
@@ -14,8 +15,12 @@ import ProjectCard from "./ProjectCard";
 import { useEffect, useState } from "react";
 import { ProjectService } from "../../services/projectService";
 import { PROJECTS } from "../../navigation/CONSTANTS";
+import { tokens } from "../../theme/theme";
 
 const Projects = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [projects, setProjects] = useState<Project[]>([]);
   const [name, setName] = useState<string>();
   const [status, setStatus] = useState<string>();
@@ -96,9 +101,12 @@ const Projects = () => {
             console.log("filter");
             filter(name, status);
           }}
-          color="primary"
           variant="contained"
-          sx={{ gridColumn: "span 1" }}
+          sx={{
+            gridColumn: "span 1",
+            color: "black",
+            backgroundColor: colors.blueAccent[5],
+          }}
         >
           FILTER
         </Button>
