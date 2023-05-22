@@ -1,4 +1,4 @@
-const ROOT = "https://localhost:5001";
+const ROOT = "https://bugifyapi.azurewebsites.net";
 
 export const GET_ALL_PROJECTS = () => ROOT + "/Project";
 export const GET_PROJECT = () => ROOT + "/Project/";
